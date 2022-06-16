@@ -36,3 +36,16 @@
 5629	9779	6771190886902785	Projekt_Gra_Turowa.exe	58da854b1f902d9f
 7	9871	6771191318705122	CMakeFiles/Projekt_Gra_Turowa.dir/main.cpp.obj	ecc59e3710ea28bf
 9872	11897	6771191339810552	Projekt_Gra_Turowa.exe	58da854b1f902d9f
+55	2932	6771219460300816	CMakeFiles/Projekt_Gra_Turowa.dir/Frogs/Components/BaseOffensiveSpecialAttack.cpp.obj	8ba897035eab3d7d
+51	2938	6771219460371079	CMakeFiles/Projekt_Gra_Turowa.dir/Frogs/Components/BaseSpecialAttack.cpp.obj	980a9c4f48bc5330
+59	2943	6771219460651214	CMakeFiles/Projekt_Gra_Turowa.dir/Frogs/FrogsWithType.cpp.obj	46e6f2703308439c
+48	3054	6771219461770483	CMakeFiles/Projekt_Gra_Turowa.dir/Frogs/Components/BaseDefensiveSpecialAttack.cpp.obj	33bf0a8281878999
+44	3926	6771219470091450	CMakeFiles/Projekt_Gra_Turowa.dir/Frogs/BaseFrog.cpp.obj	a76996a3de88790a
+7	5920	6771219490426472	CMakeFiles/Projekt_Gra_Turowa.dir/main.cpp.obj	ecc59e3710ea28bf
+2934	6506	6771219496361977	CMakeFiles/Projekt_Gra_Turowa.dir/Frogs/Components/damageMultiplier.cpp.obj	17dbdcce983f4a1
+2939	6687	6771219498247350	CMakeFiles/Projekt_Gra_Turowa.dir/Functions/Functions.cpp.obj	3c38dd94247a8638
+8	7799	6771220322205166	CMakeFiles/Projekt_Gra_Turowa.dir/main.cpp.obj	ecc59e3710ea28bf
+7	7853	6771221195967935	CMakeFiles/Projekt_Gra_Turowa.dir/main.cpp.obj	ecc59e3710ea28bf
+13	8019	6771221627379429	CMakeFiles/Projekt_Gra_Turowa.dir/main.cpp.obj	ecc59e3710ea28bf
+7	3502	6771222265192165	CMakeFiles/Projekt_Gra_Turowa.dir/main.cpp.obj	ecc59e3710ea28bf
+3503	3812	6771222268234033	Projekt_Gra_Turowa.exe	58da854b1f902d9f

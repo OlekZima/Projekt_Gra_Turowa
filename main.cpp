@@ -7,6 +7,8 @@
 
 auto getRandomNumber(int min, int max) -> int;
 
+auto createRandomFrog() -> BaseFrog *;
+
 auto generateUsersFrog() -> std::array<BaseFrog *, 15>;
 
 auto generateEnemyFrogs(float statsCof) -> std::array<BaseFrog *, 4>;
@@ -14,6 +16,8 @@ auto generateEnemyFrogs(float statsCof) -> std::array<BaseFrog *, 4>;
 auto makeFrogsForUser() -> std::array<BaseFrog *, 15>;
 
 BaseSpecialAttack *generateRandomSpecialAttack();
+
+const std::string &generateRandomName();
 
 auto main() -> int {
     std::cout << "Welcome to the Game of Frogs, User!\n";
@@ -41,7 +45,12 @@ auto main() -> int {
 
         std::string inputForChooseFrogs;
 
-        auto frogs = makeFrogsForUser();
+        auto frogs = std::array<BaseFrog *, 15>{};
+
+        for (int i = 0; i < 15; ++i) {
+            frogs[i] = createRandomFrog();
+        }
+
         difficulty = game_functions::chooseDifficulty();
 
         std::array<BaseFrog *, 6> frogsUserChose{};
@@ -86,7 +95,12 @@ auto main() -> int {
                 std::cout << "Game is started!\n";
                 for (int i = 0; i < 4; ++i) {
                     std::cout << "There is a new enemy in the battle!\n";
-                    std::array<BaseFrog *, 4> frogsEnemy = generateEnemyFrogs(1);
+                    std::array<BaseFrog *, 4> frogsEnemy{};
+
+                    for (int i = 0; i < 4; ++i) {
+                        frogsEnemy[i] = createRandomFrog();
+                    }
+
                     std::cout << "Battle " << i + 1 << '\n';
                     while (((frogsUserChose[0])->getHealth() > 0 &&
                             (frogsUserChose[1])->getHealth() > 0 &&
@@ -275,117 +289,18 @@ auto makeFrogsForUser() -> std::array<BaseFrog *, 15> {
     return frogsToUser;
 }
 
+const std::string &generateRandomName() {
+    std::random_device rd;
+    std::mt19937 gen(rd());
 
-//Fucking shit, doesn't work
+    auto frogNames = std::vector<std::string>{
+            "Bulba", "Kamien", "Wiatr", "Ognie", "Lod", "Stal", "Fukasaku", "Gama", "Gamabunta", "Gamaden", "Gamagorō",
+            "Gamahiro", "Gamaken", "Gamakichi", "Gamamaru", "Gamamichi", "Gamariki", "Gamatama", "Gamatatsu",
+            "Gekomatsu", "Gerotora"
+    };
+    std::uniform_int_distribution<> dis(0, frogNames.size() - 1);
 
-auto generateUsersFrog() -> std::array<BaseFrog *, 15> {
-
-    int randomType = getRandomNumber(1, 6);
-
-    std::array<BaseFrog *, 15> frogsGenerated{};
-    for (int i = 0; i < 15; ++i) {
-
-        int randomHP = getRandomNumber(200, 250);
-
-        switch (getRandomNumber(1, 6)) {
-            case 1: {
-
-                auto *waterFrogPointer = new WaterFrog("Bulba", randomHP, getRandomNumber(50, 80),
-                                                       getRandomNumber(10, 20));
-                frogsGenerated[i] = waterFrogPointer;
-                break;
-            }
-            case 2: {
-
-                auto *earthFrogPointer = new EarthFrog("Kamien", randomHP, getRandomNumber(50, 80),
-                                                       getRandomNumber(10, 20));
-                frogsGenerated[i] = earthFrogPointer;
-                break;
-
-            }
-            case 3: {
-
-                auto *airFrogPointer = new AirFrog("Wiatr", randomHP, getRandomNumber(50, 80),
-                                                   getRandomNumber(10, 20));
-                frogsGenerated[i] = airFrogPointer;
-                break;
-
-            }
-            case 4: {
-
-                auto *firerFrogPointer = new FireFrog("Ognie", randomHP, getRandomNumber(50, 80),
-                                                      getRandomNumber(10, 20));
-                frogsGenerated[i] = firerFrogPointer;
-                break;
-
-            }
-            case 5: {
-
-                auto *iceFrogPointer = new IceFrog("Lod", randomHP, getRandomNumber(50, 80),
-                                                   getRandomNumber(10, 20));
-                frogsGenerated[i] = iceFrogPointer;
-                break;
-            }
-            case 6: {
-
-                auto *steelFrogPointer = new SteelFrog("Stal", randomHP, getRandomNumber(50, 80),
-                                                       getRandomNumber(10, 20));
-                frogsGenerated[i] = steelFrogPointer;
-                break;
-            }
-        }
-    }
-    return frogsGenerated;
-}
-
-auto generateEnemyFrogs(float statsCof) -> std::array<BaseFrog *, 4> {
-    std::array<BaseFrog *, 4> frogsGenerated{};
-    for (int i = 0; i < 4; ++i) {
-
-        switch (getRandomNumber(1, 6)) {
-            case 1: {
-                auto *waterFrogPointer = new WaterFrog("Bulba", getRandomNumber(200, 250), getRandomNumber(50, 80),
-                                                       getRandomNumber(10, 20));
-                frogsGenerated[i] = waterFrogPointer;
-                break;
-            }
-            case 2: {
-                auto *earthFrogPointer = new EarthFrog("Kamien", getRandomNumber(200, 250), getRandomNumber(50, 80),
-                                                       getRandomNumber(10, 20));
-                frogsGenerated[i] = earthFrogPointer;
-                break;
-
-            }
-            case 3: {
-                auto *airFrogPointer = new AirFrog("Wiatr", getRandomNumber(200, 250), getRandomNumber(50, 80),
-                                                   getRandomNumber(10, 20));
-                frogsGenerated[i] = airFrogPointer;
-                break;
-
-            }
-            case 4: {
-                auto *firerFrogPointer = new FireFrog("Ognie", getRandomNumber(200, 250), getRandomNumber(50, 80),
-                                                      getRandomNumber(10, 20));
-                frogsGenerated[i] = firerFrogPointer;
-                break;
-
-            }
-            case 5: {
-                auto *iceFrogPointer = new IceFrog("Lod", getRandomNumber(200, 250), getRandomNumber(50, 80),
-                                                   getRandomNumber(10, 20));
-                frogsGenerated[i] = iceFrogPointer;
-                break;
-            }
-            case 6: {
-                auto *steelFrogPointer = new SteelFrog("Stal", getRandomNumber(200, 250), getRandomNumber(50, 80),
-                                                       getRandomNumber(10, 20));
-                frogsGenerated[i] = steelFrogPointer;
-                break;
-            }
-        }
-    }
-    return frogsGenerated;
-
+    return frogNames[dis(rd)];
 
 }
 
@@ -394,83 +309,60 @@ auto createRandomFrog() -> BaseFrog * {
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> dis(1, 6);
 
+    BaseFrog *frog;
+
     switch (dis(rd)) {
         case 1: {
-            auto *frog = new WaterFrog();
-            frog->frogGiveSpecialAttack(generateRandomSpecialAttack());
+            frog = new WaterFrog();
+            //frog->frogGiveSpecialAttack(generateRandomSpecialAttack());
             break;
         }
         case 2: {
-            auto *frog = new EarthFrog();
-            frog->frogGiveSpecialAttack(generateRandomSpecialAttack());
+            frog = new EarthFrog();
+            //frog->frogGiveSpecialAttack(generateRandomSpecialAttack());
             break;
         }
         case 3: {
-            auto *frog = new AirFrog();
-            frog->frogGiveSpecialAttack(generateRandomSpecialAttack());
+            frog = new AirFrog();
+            //frog->frogGiveSpecialAttack(generateRandomSpecialAttack());
             break;
         }
         case 4: {
-            auto *frog = new FireFrog();
-            frog->frogGiveSpecialAttack(generateRandomSpecialAttack());
+            frog = new FireFrog();
+           // frog->frogGiveSpecialAttack(generateRandomSpecialAttack());
             break;
         }
         case 5: {
-            auto *frog = new IceFrog();
-            frog->frogGiveSpecialAttack(generateRandomSpecialAttack());
+            frog = new IceFrog();
+           // frog->frogGiveSpecialAttack(generateRandomSpecialAttack());
             break;
         }
         case 6: {
-            auto *frog = new SteelFrog();
-            frog->frogGiveSpecialAttack(generateRandomSpecialAttack());
+            frog = new SteelFrog();
+            //frog->frogGiveSpecialAttack(generateRandomSpecialAttack());
             break;
         }
     }
 
-    frog->se
+    frog->setFrogName(generateRandomName());
+    frog->setFrogMaxHealth(getRandomNumber(200, 250));
+    frog->setFrogMaxPower(getRandomNumber(50, 80));
+    frog->setFrogAgility(getRandomNumber(10, 20));
 
+    return frog;
+}
 
+auto getRandomNumber(int min, int max) -> int{
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(min, max);
 
+    return dis(rd);
 }
 
 BaseSpecialAttack *generateRandomSpecialAttack() {
-    return nullptr;
-}
-
-auto getRandomNumber(int min, int max) -> int {
-    static std::random_device rd;
-    static std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(min, max);
-    return dis(gen);
-}
-
-auto generateEnemyFrogs(float statsCof, int difficulty) -> std::array<BaseFrog *, 4> {
-    std::array<BaseFrog *, 4> frogsGenerated{};
-
-    switch (difficulty) {
-        case 1: {
-            frogsGenerated[0] = new WaterFrog("Bulba", getRandomNumber(200, 250), getRandomNumber(50, 80),
-                                              getRandomNumber(10, 20));
-            frogsGenerated[1] = new EarthFrog("Kamien", getRandomNumber(200, 250), getRandomNumber(50, 80),
-                                              getRandomNumber(10, 20));
-            frogsGenerated[2] = new AirFrog("Wiatr", getRandomNumber(200, 250), getRandomNumber(50, 80),
-                                            getRandomNumber(10, 20));
-            frogsGenerated[3] = new FireFrog("Ognie", getRandomNumber(200, 250), getRandomNumber(50, 80),
-                                             getRandomNumber(10, 20));
-
-
-            break;
-        }
-        case 2: {
-
-            break;
-        }
-        case 3: {
-
-            break;
-        }
-
-    }
-    return frogsGenerated;
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(1, 6);
 
 }

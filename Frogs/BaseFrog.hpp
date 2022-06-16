@@ -97,5 +97,13 @@ public:
 
     int FrogGetAgility();
 
+    void setFrogName(const std::string &frogName);
+
+    void setFrogMaxHealth(int frogMaxHealth);
+
+    void setFrogAgility(int frogAgility);
+
+    void setFrogMaxPower(int frogMaxPower);
+
     virtual ~BaseFrog();
 };

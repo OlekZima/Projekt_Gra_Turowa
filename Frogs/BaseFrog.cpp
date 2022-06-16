@@ -208,4 +208,20 @@ BaseFrog::BaseFrog(const std::string &frogName, int frogMaxHealth_, int frogMaxP
 
 BaseFrog::BaseFrog() {}
 
+void BaseFrog::setFrogName(const std::string &frogName) {
+    frogName_ = frogName;
+}
+
+void BaseFrog::setFrogMaxHealth(int frogMaxHealth) {
+    frogMaxHealth_ = frogMaxHealth;
+}
+
+void BaseFrog::setFrogAgility(int frogAgility) {
+    frogAgility_ = frogAgility;
+}
+
+void BaseFrog::setFrogMaxPower(int frogMaxPower) {
+    frogMaxPower_ = frogMaxPower;
+}
+
 
