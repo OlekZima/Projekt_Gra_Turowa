@@ -77,7 +77,7 @@ public:
 
     auto frogAddExp(int expPoints) const -> void;
 
-    auto frogUseSpecialAttack(BaseFrog *frogsToUseSpecialAttack) -> void;
+    auto frogUseSpecialAttack(BaseFrog *frogsToUseSpecialAttack) -> int;
 
     int getFrogMaxPower() const;
 

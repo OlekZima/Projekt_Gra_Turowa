@@ -90,7 +90,7 @@ bool BaseFrog::isAlive() const {
     return isAlive_;
 }
 
-auto BaseFrog::frogUseSpecialAttack(BaseFrog *frogsToUseSpecialAttack) -> void {
+auto BaseFrog::frogUseSpecialAttack(BaseFrog *frogsToUseSpecialAttack) -> int {
     if (this->getSpecialAttack()->getSpecialAttackUses_() <
         this->getSpecialAttack()->getHowManyTimesSpecialAttackCanBeUsed()) {
         if (this->getSpecialAttack()->getSpecialAttackType_() == SpecialAttackType::DEFENSIVE) {
@@ -100,7 +100,7 @@ auto BaseFrog::frogUseSpecialAttack(BaseFrog *frogsToUseSpecialAttack) -> void {
                       << " on frog " << frogsToUseSpecialAttack->getFrogName() << " and increased his power by "
                       << this->getSpecialAttack()->getSpecialAttackPower_() << "!\n";
             this->getSpecialAttack()->useSpecialAttack();
-
+            return 1;
         } else {
             auto damageMultiplier = calculateDamageMultiplier(this, *&frogsToUseSpecialAttack);
             this->getSpecialAttack()->useSpecialAttack();
@@ -111,8 +111,10 @@ auto BaseFrog::frogUseSpecialAttack(BaseFrog *frogsToUseSpecialAttack) -> void {
             } else {
                 std::cout << "Enemy`s " << frogsToUseSpecialAttack->getFrogName() << " is faster than yours!\n";
             }
+            return 1;
         }
     }
+    return 0;
 }
 
 auto BaseFrog::calculateExpToTheNextLvl() const -> int {
@@ -167,7 +169,7 @@ auto BaseFrog::frogCheckIfDefensiveSpecialAttackIsStillWorkingOn() -> bool {
 }
 
 auto BaseFrog::getFrogInfo() -> std::string {
-    return " [" + this->getFrogName() + "](" + std::to_string(frogPower_) + " STR | " +
+    return " [" + frogName_ + "](" + std::to_string(frogPower_) + " STR | " +
            std::to_string(frogHealth_) + " HP | " +
            std::to_string(frogAgility_) + " AGL | " +
            std::to_string(frogLevel_) + " LVL | " +
