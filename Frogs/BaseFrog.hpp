@@ -43,7 +43,7 @@ public:
 
     auto attackFrog(BaseFrog *enemyFrog) const -> void;
 
-    BaseFrog(std::string frogName, int frogMaxPower_, int frogMaxHealth_, int frogAgility);
+    BaseFrog(std::string frogName, int frogMaxHealth_, int frogMaxPower_, int frogAgility);
 
     auto frogGiveSpecialAttack(BaseSpecialAttack *baseSpecialAttack) -> void;
 

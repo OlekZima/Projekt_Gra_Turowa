@@ -21,7 +21,7 @@ namespace game_functions {
                      "2. Medium -- you will have 6 battles to win\n" <<
                      "3. Hard -- you will have 8 battles to win\n" <<
                      "To make a choice input number of level of difficulty\n" <<
-                     "or input --help or -h to see this help\n";
+                     "or input --help or -h to see this help\n\n";
             } else if (option != "1" && option != "2" && option != "3") {
                 cout << "Wrong input!\n";
             }
@@ -37,7 +37,7 @@ namespace game_functions {
 
             cout << "\t(1) Upgrade strength +23\n";
             cout << "\t(2) Upgrade dexterity +4\n";
-            cout << "\t(3) Cancel\n\n";
+            cout << "\t(3) Cancel\n";
 
             cout << "Input:";
             cin >> option;
@@ -45,7 +45,7 @@ namespace game_functions {
             if (option == "--help" || option == "-h") {
                 cout << "Choose 1. to increase Frog's power by 23! " <<
                      "2. to increase Frog's agility by 4! " <<
-                     "3. or anything else to cancel\n";
+                     "3. or anything else to cancel\n\n";
             }
         }
 

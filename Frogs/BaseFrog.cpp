@@ -3,7 +3,7 @@
 #include <utility>
 #include <iostream>
 
-BaseFrog::BaseFrog(std::string frogName, int frogMaxPower_, int frogMaxHealth_, int frogAgility) :
+BaseFrog::BaseFrog(std::string frogName, int frogMaxHealth_, int frogMaxPower_, int frogAgility) :
         frogName_(std::move(frogName)), frogMaxPower_(frogMaxPower_), frogMaxHealth_(frogMaxHealth_),
         frogAgility_(frogAgility) {};
 
@@ -167,12 +167,11 @@ auto BaseFrog::frogCheckIfDefensiveSpecialAttackIsStillWorkingOn() -> bool {
 }
 
 auto BaseFrog::getFrogInfo() -> std::string {
-    return " [" + this->getFrogName() + "](" + std::to_string(this->getFrogMaxPower()) + " STR | " +
-           std::to_string(this->getFrogCurrentHp())
-           + " HP | "
-           + std::to_string(this->getFrogAgility()) + " AGL | " + std::to_string(this->getFrogLevel()) + " LVL | " +
-           std::to_string(this->getFrogExpPoints())
-           + " EXP)";
+    return " [" + this->getFrogName() + "](" + std::to_string(frogPower_) + " STR | " +
+           std::to_string(frogHealth_) + " HP | " +
+           std::to_string(frogAgility_) + " AGL | " +
+           std::to_string(frogLevel_) + " LVL | " +
+           std::to_string(frogExpPoints_) + " EXP)";
 
 }
 
