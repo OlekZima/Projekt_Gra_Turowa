@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include "BaseFrog.hpp"
 
 class WaterFrog : public BaseFrog {
@@ -32,13 +33,13 @@ public:
 
 };
 
-class FirerFrog : public BaseFrog {
+class FireFrog : public BaseFrog {
 public:
     using BaseFrog::BaseFrog;
 
     auto getFrogType() const -> FrogType override;
 
-    ~FirerFrog() override;
+    ~FireFrog() override;
 
 };
 

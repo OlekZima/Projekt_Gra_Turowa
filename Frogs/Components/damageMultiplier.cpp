@@ -1,7 +1,9 @@
 #include "../BaseFrog.hpp"
 #include "BaseOffensiveSpecialAttack.hpp"
 
-auto calculateDamageMultiplier(const BaseFrog *attackingFrog, const BaseFrog *attackedFrog) -> float {
+auto calculateDamageMultiplier(const BaseFrog *attackingFrog,
+                               BaseFrog *attackedFrog) -> float {
+
     auto attackingFrogType = attackingFrog->getFrogType();
     auto attackedFrogType = attackedFrog->getFrogType();
 

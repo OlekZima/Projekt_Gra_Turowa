@@ -1,22 +1,22 @@
 #include <iostream>
 #include <array>
-#include "./Frogs/FrogsWithType.hpp"
-#include <ctime>
-#include <cstdlib>
-#include <algorithm>
 #include <random>
-#include <stdlib.h>
+#include <memory>
+#include "./Frogs/FrogsWithType.hpp"
 #include "./Functions/Functions.hpp"
+
+auto getRandomNumber(int min, int max) -> int;
 
 auto generateUsersFrog() -> std::array<BaseFrog *, 15>;
 
 auto generateEnemyFrogs(float statsCof) -> std::array<BaseFrog *, 4>;
 
-auto foo() -> void;
+auto makeFrogsForUser() -> std::array<BaseFrog *, 15>;
+
+BaseSpecialAttack *generateRandomSpecialAttack();
 
 auto main() -> int {
-    srand(time(nullptr));
-    std::cout << "Welcome to the game, User!\n";
+    std::cout << "Welcome to the Game of Frogs, User!\n";
     std::string input;
     int difficulty = 0;
 
@@ -41,43 +41,43 @@ auto main() -> int {
 
         std::string inputForChooseFrogs;
 
-        auto frogs = generateUsersFrog();
+        auto frogs = makeFrogsForUser();
         difficulty = game_functions::chooseDifficulty();
 
         std::array<BaseFrog *, 6> frogsUserChose{};
 
+        int counter = 0;
+
+        for (int i = 0; i < frogs.size(); ++i) {
+            std::cout << "Frog # " << i + 1 << frogs[i]->getFrogInfo() << '\n';
+        }
+
+        std::cout << "It's time to choose your Team!\n";
         std::cout << "Choose 6 frogs from the list!\n\n";
 
-        int currentAmountOfFrogs = 15;
+        while (counter != 6) {
+            std::cout << "Type " + std::to_string((counter + 1)) + " number:";
+            std::cin >> inputForChooseFrogs;
 
-        for (int i = 0; i < 6; i++) {
-            std::cout << "Frogs list to choose\n";
-            for (int j = 0; j < currentAmountOfFrogs; j++) {
-                std::cout << "Frog # " << j + 1 << ':' << frogs[i]->getFrogInfo() << '\n';
-            }
-            std::cout << "Choose frog number " << i + 1 << ":\n";
-
-            char currentAmountTmp = (char) currentAmountOfFrogs;
-            std::string tmpAmount = std::to_string(currentAmountTmp);
-
-            /// Maybe doesn't work
-            while (inputForChooseFrogs >= "1" && inputForChooseFrogs <= tmpAmount) {
-                std::cin >> inputForChooseFrogs;
-
-                if (inputForChooseFrogs == "--help" || inputForChooseFrogs == "-h") {
-                    std::cout << "Here you can choose frog number from the list to add them to your team\n" <<
-                              "Choose wisely!\n\n";
-                } else if (inputForChooseFrogs < "1" && inputForChooseFrogs > tmpAmount) {
-                    std::cout << "Wrong input!\n";
-                }
+            if (inputForChooseFrogs == "-h" || inputForChooseFrogs == "--help") {
+                std::cout << "Here you can choose your frogs from the list\n" <<
+                          "To choose input number of frog\n" <<
+                          "Choose wisely!\n" << "To see list of frogs input --help or -h\n\n";
+            } else if (std::stoi(inputForChooseFrogs) > 0 && std::stoi(inputForChooseFrogs) <= 15) {
+                frogsUserChose[counter] = frogs[std::stoi(inputForChooseFrogs) - 1];
+                counter++;
+            } else {
+                std::cout << "Wrong input!\n";
             }
 
-//            int inputNumberForChoose = std::stoi(inputForChooseFrogs);
-
-            frogsUserChose[i] = frogs[std::stoi(inputForChooseFrogs) - 1];
-            (void) std::remove(frogs.begin(), frogs.end(), frogs[std::stoi(inputForChooseFrogs) - 1]);
-
+            if (counter == 6) {
+                std::cout << "Your Team is ready for the greatest adventures!\n\n";
+            }
         }
+
+
+        int inputNumberForChoose = std::stoi(inputForChooseFrogs);
+
 
         switch (difficulty) {
             case 1: {
@@ -88,12 +88,12 @@ auto main() -> int {
                     std::cout << "There is a new enemy in the battle!\n";
                     std::array<BaseFrog *, 4> frogsEnemy = generateEnemyFrogs(1);
                     std::cout << "Battle " << i + 1 << '\n';
-                    while ((frogsUserChose[0]->getHealth() > 0 &&
-                            frogsUserChose[1]->getHealth() > 0 &&
-                            frogsUserChose[2]->getHealth() > 0 &&
-                            frogsUserChose[3]->getHealth() > 0 &&
-                            frogsUserChose[4]->getHealth() > 0 &&
-                            frogsUserChose[5]->getHealth() > 0) ||
+                    while (((frogsUserChose[0])->getHealth() > 0 &&
+                            (frogsUserChose[1])->getHealth() > 0 &&
+                            (frogsUserChose[2])->getHealth() > 0 &&
+                            (frogsUserChose[3])->getHealth() > 0 &&
+                            (frogsUserChose[4])->getHealth() > 0 &&
+                            (frogsUserChose[5])->getHealth() > 0) ||
                            (frogsEnemy[0]->getHealth() > 0 &&
                             frogsEnemy[1]->getHealth() > 0 &&
                             frogsEnemy[2]->getHealth() > 0 &&
@@ -117,7 +117,7 @@ auto main() -> int {
                             }
                         }
                         chosen = std::stoi(inputForChooseFrog) - 1;
-                        if (frogsUserChose[chosen]->getHealth() > 0) {
+                        if ((frogsUserChose[chosen])->getHealth() > 0) {
                             std::string inputForAction;
                             std::cout << "Choose your action!\n";
                             while (inputForAction != "1" && inputForAction != "2") {
@@ -149,7 +149,6 @@ auto main() -> int {
 
                             int chosenEnemyFrogToAttack = std::stoi(chooseEnemyFrogToAttack) - 1;
                             chosenUserFrog->attackFrog(frogsEnemy[chosenEnemyFrogToAttack]);
-
 
 
                             if (frogsEnemy[0]->getHealth() > 0) {
@@ -254,166 +253,83 @@ auto main() -> int {
 
 }
 
+auto makeFrogsForUser() -> std::array<BaseFrog *, 15> {
 
-auto foo() -> void {
-    /* std::cout << "Welcome to the game, User!\n";
-     std::string input;
-     int difficulty = 0;
+    std::array<BaseFrog *, 15> frogsToUser{};
 
-
-     while (input != "1" && input != "2") {
-         std::cout << "Do you want to play?\n";
-         std::cout << "Choose (1) to start the game\n" <<
-                   "Choose (2) to exit\n";
-         std::cin >> input;
-
-         if (input == "--help" || input == "-h") {
-             std::cout << "Here you can choose to start the game or exit\n\n" <<
-                       "To start the game input (1)\n" <<
-                       "To exit input (2)\n\n";
-         } else if (input != "1" && input != "2") {
-             std::cout << "Wrong input!\n";
-         }
-     }
-     int inputNumber = std::stoi(input);
-
-     if (inputNumber == 1) {
-         std::string inputForChooseFrogs;
-
-         auto frogs = generateUsersFrog();
-         difficulty = game_functions::chooseDifficulty();
-
-         std::array<BaseFrog *, 6> frogsUserChose{};
-
-         std::cout << "Choose 6 frogs from the list!\n\n";
-
-         int currentAmountOfFrogs = 15;
-
-         for (int i = 0; i < 6; i++) {
-             std::cout << "Frogs list to choose\n";
-             for (int j = 0; j < currentAmountOfFrogs; j++) {
-                 std::cout << "Frog # " << j + 1 << ':' << frogs[i]->getFrogInfo() << '\n';
-             }
-             std::cout << "Choose frog number " << i + 1 << ":\n";
-
-             char currentAmountTmp = (char) currentAmountOfFrogs;
-             std::string tmpAmount = std::to_string(currentAmountTmp);
-
-             /// Maybe doesn't work
-             while (inputForChooseFrogs >= "1" && inputForChooseFrogs <= tmpAmount) {
-                 std::cin >> inputForChooseFrogs;
-
-                 if (inputForChooseFrogs == "--help" || inputForChooseFrogs == "-h") {
-                     std::cout << "Here you can choose frog number from the list to add them to your team\n" <<
-                               "Choose wisely!\n\n";
-                 } else if (inputForChooseFrogs < "1" && inputForChooseFrogs > "16") {
-                     std::cout << "Wrong input!\n";
-                 }
-             }
-             frogsUserChose[i] = frogs[std::stoi(inputForChooseFrogs) - 1];
-             (void) std::remove(frogs.begin(), frogs.end(), frogs[std::stoi(inputForChooseFrogs) - 1]);
-
-         }
-
-
-         switch (difficulty) {
-             case 1: {
-                 std::cout << "You chose Easy!\n" <<
-                           "And you have 4 battles to win\n";
-                 std::cout << "Game is started!\n";
-                 for (int i = 0; i < 4; ++i) {
-                     std::cout << "There is a new enemy in the battle!\n";
-                     std::cout << "Battle " << i + 1 << '\n';
-
-
-                 }
-
-
-                 break;
-             }
-             case 2: {
-                 std::cout << "You chose Medium!\n" <<
-                           "And you have 4 battles to win\n";
-                 std::cout << "Game is started!\n";
-                 for (int i = 0; i < 6; ++i) {
-                     std::cout << "There is a new enemy in the battle!\n";
-                     std::cout << "Battle " << i + 1 << '\n';
-
-
-                 }
-
-
-                 break;
-             }
-             case 3: {
-                 std::cout << "You chose Hard!\n" <<
-                           "And you have 4 battles to win\n";
-                 std::cout << "Game is started!\n";
-                 for (int i = 0; i < 8; ++i) {
-                     std::cout << "There is a new enemy in the battle!\n";
-                     std::cout << "Battle " << i + 1 << '\n';
-
-
-                 }
-
-
-                 break;
-             }
-
-         }
-
-
-     } else {
-         std::cout << "Goodbye!\n";
-     }
-
-
- }*/
+    frogsToUser[0] = new WaterFrog("Fukasaku", 247, 55, 15);
+    frogsToUser[1] = new WaterFrog("Gama", 212, 77, 20);
+    frogsToUser[2] = new WaterFrog("Gamabunta", 227, 54, 25);
+    frogsToUser[3] = new EarthFrog("Gamaden", 243, 77, 30);
+    frogsToUser[4] = new EarthFrog("Gamagorō", 229, 51, 35);
+    frogsToUser[5] = new EarthFrog("Gamahiro", 250, 55, 40);
+    frogsToUser[6] = new AirFrog("Gamaken", 209, 67, 45);
+    frogsToUser[7] = new AirFrog("Gamakichi", 236, 62, 50);
+    frogsToUser[8] = new FireFrog("Gamamaru", 201, 67, 55);
+    frogsToUser[9] = new FireFrog("Gamamichi", 218, 78, 60);
+    frogsToUser[10] = new FireFrog("Gamariki", 231, 75, 65);
+    frogsToUser[11] = new SteelFrog("Gamatama", 207, 74, 70);
+    frogsToUser[12] = new SteelFrog("Gamatatsu", 205, 61, 75);
+    frogsToUser[13] = new SteelFrog("Gekomatsu", 224, 68, 80);
+    frogsToUser[14] = new AirFrog("Gerotora", 225, 66, 85);
+    return frogsToUser;
 }
 
+
+//Fucking shit, doesn't work
+
 auto generateUsersFrog() -> std::array<BaseFrog *, 15> {
-    srand(time(nullptr));
+
+    int randomType = getRandomNumber(1, 6);
+
     std::array<BaseFrog *, 15> frogsGenerated{};
     for (int i = 0; i < 15; ++i) {
-//  min + rand() % (max+1 - min)
 
-        int randomType = 1 + rand() % (6 + 1 - 1);
+        int randomHP = getRandomNumber(200, 250);
 
-        int randomHealth = 200 + rand() % (250 + 1 - 200);
-        int randomPower = 50 + rand() % (80 + 1 - 50);
-        int randomAgility = 10 + rand() % (20 + 1 - 10);
-
-        switch (randomType) {
+        switch (getRandomNumber(1, 6)) {
             case 1: {
-                auto *waterFrogPointer = new WaterFrog("Bulba", randomHealth, randomPower, randomAgility);
+
+                auto *waterFrogPointer = new WaterFrog("Bulba", randomHP, getRandomNumber(50, 80),
+                                                       getRandomNumber(10, 20));
                 frogsGenerated[i] = waterFrogPointer;
                 break;
             }
             case 2: {
-                auto *earthFrogPointer = new EarthFrog("Kamien", randomHealth, randomPower, randomAgility);
+
+                auto *earthFrogPointer = new EarthFrog("Kamien", randomHP, getRandomNumber(50, 80),
+                                                       getRandomNumber(10, 20));
                 frogsGenerated[i] = earthFrogPointer;
                 break;
 
             }
             case 3: {
-                auto *airFrogPointer = new AirFrog("Wiatr", randomHealth, randomPower, randomAgility);
+
+                auto *airFrogPointer = new AirFrog("Wiatr", randomHP, getRandomNumber(50, 80),
+                                                   getRandomNumber(10, 20));
                 frogsGenerated[i] = airFrogPointer;
                 break;
 
             }
             case 4: {
-                auto *firerFrogPointer = new FirerFrog("Ognie", randomHealth, randomPower, randomAgility);
+
+                auto *firerFrogPointer = new FireFrog("Ognie", randomHP, getRandomNumber(50, 80),
+                                                      getRandomNumber(10, 20));
                 frogsGenerated[i] = firerFrogPointer;
                 break;
 
             }
             case 5: {
-                auto *iceFrogPointer = new IceFrog("Lod", randomHealth, randomPower, randomAgility);
+
+                auto *iceFrogPointer = new IceFrog("Lod", randomHP, getRandomNumber(50, 80),
+                                                   getRandomNumber(10, 20));
                 frogsGenerated[i] = iceFrogPointer;
                 break;
             }
             case 6: {
-                auto *steelFrogPointer = new SteelFrog("Stal", randomHealth, randomPower, randomAgility);
+
+                auto *steelFrogPointer = new SteelFrog("Stal", randomHP, getRandomNumber(50, 80),
+                                                       getRandomNumber(10, 20));
                 frogsGenerated[i] = steelFrogPointer;
                 break;
             }
@@ -423,48 +339,46 @@ auto generateUsersFrog() -> std::array<BaseFrog *, 15> {
 }
 
 auto generateEnemyFrogs(float statsCof) -> std::array<BaseFrog *, 4> {
-    srand(time(nullptr));
     std::array<BaseFrog *, 4> frogsGenerated{};
     for (int i = 0; i < 4; ++i) {
-//  min + rand() % (max+1 - min)
 
-        int randomType = 1 + rand() % (6 + 1 - 1);
-
-        int randomHealth = (200 + rand() % (250 + 1 - 200)) * statsCof;
-        int randomPower = (50 + rand() % (80 + 1 - 50)) * statsCof;
-        int randomAgility = (10 + rand() % (20 + 1 - 10)) * statsCof;
-
-        switch (randomType) {
+        switch (getRandomNumber(1, 6)) {
             case 1: {
-                auto *waterFrogPointer = new WaterFrog("Bulba", randomHealth, randomPower, randomAgility);
+                auto *waterFrogPointer = new WaterFrog("Bulba", getRandomNumber(200, 250), getRandomNumber(50, 80),
+                                                       getRandomNumber(10, 20));
                 frogsGenerated[i] = waterFrogPointer;
                 break;
             }
             case 2: {
-                auto *earthFrogPointer = new EarthFrog("Kamien", randomHealth, randomPower, randomAgility);
+                auto *earthFrogPointer = new EarthFrog("Kamien", getRandomNumber(200, 250), getRandomNumber(50, 80),
+                                                       getRandomNumber(10, 20));
                 frogsGenerated[i] = earthFrogPointer;
                 break;
 
             }
             case 3: {
-                auto *airFrogPointer = new AirFrog("Wiatr", randomHealth, randomPower, randomAgility);
+                auto *airFrogPointer = new AirFrog("Wiatr", getRandomNumber(200, 250), getRandomNumber(50, 80),
+                                                   getRandomNumber(10, 20));
                 frogsGenerated[i] = airFrogPointer;
                 break;
 
             }
             case 4: {
-                auto *firerFrogPointer = new FirerFrog("Ognie", randomHealth, randomPower, randomAgility);
+                auto *firerFrogPointer = new FireFrog("Ognie", getRandomNumber(200, 250), getRandomNumber(50, 80),
+                                                      getRandomNumber(10, 20));
                 frogsGenerated[i] = firerFrogPointer;
                 break;
 
             }
             case 5: {
-                auto *iceFrogPointer = new IceFrog("Lod", randomHealth, randomPower, randomAgility);
+                auto *iceFrogPointer = new IceFrog("Lod", getRandomNumber(200, 250), getRandomNumber(50, 80),
+                                                   getRandomNumber(10, 20));
                 frogsGenerated[i] = iceFrogPointer;
                 break;
             }
             case 6: {
-                auto *steelFrogPointer = new SteelFrog("Stal", randomHealth, randomPower, randomAgility);
+                auto *steelFrogPointer = new SteelFrog("Stal", getRandomNumber(200, 250), getRandomNumber(50, 80),
+                                                       getRandomNumber(10, 20));
                 frogsGenerated[i] = steelFrogPointer;
                 break;
             }
@@ -472,5 +386,91 @@ auto generateEnemyFrogs(float statsCof) -> std::array<BaseFrog *, 4> {
     }
     return frogsGenerated;
 
+
+}
+
+auto createRandomFrog() -> BaseFrog * {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(1, 6);
+
+    switch (dis(rd)) {
+        case 1: {
+            auto *frog = new WaterFrog();
+            frog->frogGiveSpecialAttack(generateRandomSpecialAttack());
+            break;
+        }
+        case 2: {
+            auto *frog = new EarthFrog();
+            frog->frogGiveSpecialAttack(generateRandomSpecialAttack());
+            break;
+        }
+        case 3: {
+            auto *frog = new AirFrog();
+            frog->frogGiveSpecialAttack(generateRandomSpecialAttack());
+            break;
+        }
+        case 4: {
+            auto *frog = new FireFrog();
+            frog->frogGiveSpecialAttack(generateRandomSpecialAttack());
+            break;
+        }
+        case 5: {
+            auto *frog = new IceFrog();
+            frog->frogGiveSpecialAttack(generateRandomSpecialAttack());
+            break;
+        }
+        case 6: {
+            auto *frog = new SteelFrog();
+            frog->frogGiveSpecialAttack(generateRandomSpecialAttack());
+            break;
+        }
+    }
+
+    frog->se
+
+
+
+}
+
+BaseSpecialAttack *generateRandomSpecialAttack() {
+    return nullptr;
+}
+
+auto getRandomNumber(int min, int max) -> int {
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(min, max);
+    return dis(gen);
+}
+
+auto generateEnemyFrogs(float statsCof, int difficulty) -> std::array<BaseFrog *, 4> {
+    std::array<BaseFrog *, 4> frogsGenerated{};
+
+    switch (difficulty) {
+        case 1: {
+            frogsGenerated[0] = new WaterFrog("Bulba", getRandomNumber(200, 250), getRandomNumber(50, 80),
+                                              getRandomNumber(10, 20));
+            frogsGenerated[1] = new EarthFrog("Kamien", getRandomNumber(200, 250), getRandomNumber(50, 80),
+                                              getRandomNumber(10, 20));
+            frogsGenerated[2] = new AirFrog("Wiatr", getRandomNumber(200, 250), getRandomNumber(50, 80),
+                                            getRandomNumber(10, 20));
+            frogsGenerated[3] = new FireFrog("Ognie", getRandomNumber(200, 250), getRandomNumber(50, 80),
+                                             getRandomNumber(10, 20));
+
+
+            break;
+        }
+        case 2: {
+
+            break;
+        }
+        case 3: {
+
+            break;
+        }
+
+    }
+    return frogsGenerated;
 
 }

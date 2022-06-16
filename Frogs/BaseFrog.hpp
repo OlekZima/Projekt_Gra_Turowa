@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <memory>
 #include "Components/Enums/FrogType.hpp"
 #include "Components/BaseSpecialAttack.hpp"
 
@@ -43,7 +44,12 @@ public:
 
     auto attackFrog(BaseFrog *enemyFrog) const -> void;
 
-    BaseFrog(std::string frogName, int frogMaxHealth_, int frogMaxPower_, int frogAgility);
+    BaseFrog(const std::string &frogName, int frogMaxHealth_, int frogMaxPower_, int frogAgility);
+
+    BaseFrog(const std::string &frogName, int frogMaxHealth_, int frogMaxPower_, int frogAgility,
+             BaseSpecialAttack *frogSpecialAttack);
+
+    BaseFrog();
 
     auto frogGiveSpecialAttack(BaseSpecialAttack *baseSpecialAttack) -> void;
 
@@ -77,7 +83,7 @@ public:
 
     auto frogAddExp(int expPoints) const -> void;
 
-    auto frogUseSpecialAttack(BaseFrog *frogsToUseSpecialAttack) -> int;
+    auto frogUseSpecialAttack(BaseFrog *frogsToUseSpecialAttack) const -> int;
 
     int getFrogMaxPower() const;
 

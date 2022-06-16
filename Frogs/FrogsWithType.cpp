@@ -29,11 +29,11 @@ AirFrog::~AirFrog() {
 #endif*/
 }
 
-auto FirerFrog::getFrogType() const -> FrogType {
+auto FireFrog::getFrogType() const -> FrogType {
     return FrogType::FIRE;
 }
 
-FirerFrog::~FirerFrog() {
+FireFrog::~FireFrog() {
 /*#ifdef DEBUG
 
 #endif*/
