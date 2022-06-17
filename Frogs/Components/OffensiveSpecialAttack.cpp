@@ -5,6 +5,6 @@ SpecialAttackType OffensiveSpecialAttack::getSpecialAttackType_() const {
     return SpecialAttackType::OFFENSIVE;
 }
 
-OffensiveSpecialAttack::~OffensiveSpecialAttack() = default;;
+OffensiveSpecialAttack::~OffensiveSpecialAttack() {};
 
 

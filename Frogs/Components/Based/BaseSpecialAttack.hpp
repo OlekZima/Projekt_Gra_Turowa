@@ -13,7 +13,7 @@ protected:
     int specialAttackUses_ = 0;
     int howManyTimesSpecialAttackCanBeUsed_;
     SpecialAttackType specialAttackType_;
-    int howManyRoundsWorking_;
+    int howManyRoundsWorking_ = 3;
 
 public:
 
@@ -22,14 +22,16 @@ public:
     BaseSpecialAttack();
 
     BaseSpecialAttack(std::string specialAttackName_, int specialAttackPower_, int specialAttackAgilityToAvoid_,
-                      int howManyTimesSpecialAttackCanBeUsed_, int howManyRoundsWorking_);
+                      int howManyTimesSpecialAttackCanBeUsed_);
+
+    BaseSpecialAttack(const BaseSpecialAttack &other);
 
     virtual ~BaseSpecialAttack();
 
 
     ///GETTERS
 
-    int getHowManyRoundsWorking();
+    int getHowManyRoundsWorking() const;
 
     int getSpecialAttackPower_() const;
 

@@ -27,60 +27,90 @@ public:
     ///CONSTRUCTORS AND DESTRUCTOR
 
     BaseFrog();
-    BaseFrog(const std::string &frogName, int frogMaxHealth_, int frogMaxPower_, int frogAgility);
+
+    BaseFrog(std::string frogName, int frogMaxHealth_, int frogMaxPower_, int frogAgility);
+
     virtual ~BaseFrog();
 
     ///GETTERS
 
     int getFrogMaxHealth() const;
+
     auto getFrogCurrentHp() const -> int;
+
     int getFrogMaxPower() const;
+
     int getFrogPower() const;
+
     int getFrogAgility() const;
+
     int getFrogLevel() const;
+
     auto getFrogExpPoints() const -> int;
+
     int getFrogExpToTheNextLvl() const;
+
     const std::string &getFrogName() const;
+
     int getFrogExpGive() const;
+
     auto getExpPoints() const -> int;
-    static std::shared_ptr<BaseSpecialAttack> getSpecialAttack() ;
-    auto getFrogInfo() -> std::string;
+
+
+    auto getFrogInfo() const -> std::string;
+
     virtual auto getFrogType() const -> FrogType = 0;
 
     ///SETTERS
 
-    void setFrogSpecialAttack(const std::shared_ptr<BaseSpecialAttack> &frogSpecialAttack);
+
 
     void setFrogName(const std::string &frogName);
+
     void setFrogMaxHealth(int frogMaxHealth);
+
     void setFrogAgility(int frogAgility);
+
     void setFrogMaxPower(int frogMaxPower);
+
     auto setCurrentHp(int health) -> void;
+
     auto setPower(int power) -> void;
-
-
-
-
 
 
     ///METHODS
 
     auto evolvePower() -> void;
+
     auto evolveHealth() -> void;
+
     auto restoreHealth() -> void;
+
     auto restoreStats() -> void;
+
     auto restoreSpecialAttackUsedTimes() const -> void;
+
     auto printLvlPromotion() -> void;
+
     auto checkIfDead() -> bool;
+
     auto isAlive() const -> bool;
+
     auto declareDeadAndPrintDeadMessage() -> void;
-    auto attackFrog(std::shared_ptr<BaseFrog> enemyFrog) const -> void;
+
+    auto attackFrog(std::shared_ptr<BaseFrog> &enemyFrog) const -> void;
+
     auto calculateExpToTheNextLvl() const -> int;
+
     auto frogAddExp(int expPoints) const -> void;
-    auto frogUseSpecialAttack(std::shared_ptr<BaseFrog> frogsToUseSpecialAttack) const -> int;
+
+    auto frogUseSpecialAttack(std::shared_ptr<BaseFrog> &frogsToUseSpecialAttack) const -> int;
 
     auto frogCheckIfOffensiveSpecialAttackIsStillWorkingOn() -> bool;
+
     auto frogCheckIfDefensiveSpecialAttackIsStillWorkingOn() -> bool;
 
     const std::shared_ptr<BaseSpecialAttack> &getFrogSpecialAttack() const;
+
+    void setFrogSpecialAttack(const std::shared_ptr<BaseSpecialAttack> &frogSpecialAttack);
 };

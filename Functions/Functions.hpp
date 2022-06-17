@@ -13,14 +13,13 @@ namespace game_functions {
     auto calculateDamageMultiplier(const BaseFrog *attackingFrog,
                                    std::shared_ptr<BaseFrog> attackedFrog) -> float;
 
-    auto randomNumber(int min, int max) -> int;
-
     auto createRandomFrog() -> std::shared_ptr<BaseFrog>;
 
-    auto generateRandomSpecialAttack(FrogType frogType) -> std::shared_ptr<BaseSpecialAttack>;
+    auto generateRandomSpecialAttack(const FrogType &frogType) -> std::shared_ptr<BaseSpecialAttack>;
 
     const std::string &generateRandomName();
 
-    auto Battle() -> void;
+    auto Battle(std::array<std::shared_ptr<BaseFrog>, 6> &frogsUserChose,
+                std::array<std::shared_ptr<BaseFrog>, 4> &frogsEnemy) -> void;
 
 }

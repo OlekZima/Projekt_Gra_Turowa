@@ -5,11 +5,18 @@
 BaseSpecialAttack::BaseSpecialAttack() {};
 
 BaseSpecialAttack::BaseSpecialAttack(std::string specialAttackName_, int SpecialAttackPower_,
-                                     int specialAttackAgilityToAvoid, int howManyTimesSpecialAttackCanBeUsed_,
-                                     int howManyRoundsWorking_)
+                                     int specialAttackAgilityToAvoid, int howManyTimesSpecialAttackCanBeUsed_)
         : specialAttackName_(std::move(specialAttackName_)), specialAttackPower_(SpecialAttackPower_),
-          howManyTimesSpecialAttackCanBeUsed_(howManyTimesSpecialAttackCanBeUsed_),
-          howManyRoundsWorking_(howManyRoundsWorking_) {}
+          howManyTimesSpecialAttackCanBeUsed_(howManyTimesSpecialAttackCanBeUsed_) {};
+
+BaseSpecialAttack::BaseSpecialAttack(const BaseSpecialAttack &other) {
+    this->specialAttackName_ = other.specialAttackName_;
+    this->specialAttackPower_ = other.specialAttackPower_;
+    this->specialAttackUses_ = other.specialAttackUses_;
+    this->howManyTimesSpecialAttackCanBeUsed_ = other.howManyTimesSpecialAttackCanBeUsed_;
+    this->howManyRoundsWorking_ = other.howManyRoundsWorking_;
+}
+
 
 auto BaseSpecialAttack::getSpecialAttackName() const -> std::string {
     return this->specialAttackName_;
@@ -24,38 +31,39 @@ int BaseSpecialAttack::getSpecialAttackUses_() const {
 }
 
 int BaseSpecialAttack::getHowManyTimesSpecialAttackCanBeUsed() const {
-    return howManyTimesSpecialAttackCanBeUsed_;
+    return this->howManyTimesSpecialAttackCanBeUsed_;
 }
 
 auto BaseSpecialAttack::useSpecialAttack() -> void {
-    specialAttackUses_++;
+    this->specialAttackUses_++;
 }
 
 auto BaseSpecialAttack::resetSpecialAttackUses() -> void {
-    specialAttackUses_ = 0;
+    this->specialAttackUses_ = 0;
 }
 
 void BaseSpecialAttack::setHowManyRoundsWorking(int howManyRoundsWorking) {
-    howManyRoundsWorking_ = howManyRoundsWorking;
+    this->howManyRoundsWorking_ = howManyRoundsWorking;
 }
 
 void BaseSpecialAttack::setSpecialAttackName(const std::string &specialAttackName) {
-    specialAttackName_ = specialAttackName;
+    this->specialAttackName_ = specialAttackName;
 }
 
 void BaseSpecialAttack::setSpecialAttackPower(int specialAttackPower) {
-    specialAttackPower_ = specialAttackPower;
+    this->specialAttackPower_ = specialAttackPower;
 }
 
 void BaseSpecialAttack::setHowManyTimesSpecialAttackCanBeUsed(int howManyTimesSpecialAttackCanBeUsed) {
-    howManyTimesSpecialAttackCanBeUsed_ = howManyTimesSpecialAttackCanBeUsed;
+    this->howManyTimesSpecialAttackCanBeUsed_ = howManyTimesSpecialAttackCanBeUsed;
 }
 
-int BaseSpecialAttack::getHowManyRoundsWorking()  {
-    return howManyRoundsWorking_;
+int BaseSpecialAttack::getHowManyRoundsWorking() const {
+    return this->howManyRoundsWorking_;
 }
 
-BaseSpecialAttack::~BaseSpecialAttack() {}
+
+BaseSpecialAttack::~BaseSpecialAttack() = default;
 
 
 

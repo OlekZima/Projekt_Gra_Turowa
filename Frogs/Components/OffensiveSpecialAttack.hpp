@@ -6,11 +6,9 @@
 #include "Based/BaseSpecialAttack.hpp"
 
 class OffensiveSpecialAttack : public BaseSpecialAttack {
-protected:
-    SpecialAttackType specialAttackType_ = SpecialAttackType::OFFENSIVE;
-
 public:
     using BaseSpecialAttack::BaseSpecialAttack;
+
     SpecialAttackType getSpecialAttackType_() const override;
 
     ~OffensiveSpecialAttack() override;
