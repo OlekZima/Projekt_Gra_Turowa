@@ -2,7 +2,7 @@
 #include "BaseOffensiveSpecialAttack.hpp"
 
 auto calculateDamageMultiplier(const BaseFrog *attackingFrog,
-                               BaseFrog *attackedFrog) -> float {
+                               std::shared_ptr<BaseFrog> attackedFrog) -> float {
 
     auto attackingFrogType = attackingFrog->getFrogType();
     auto attackedFrogType = attackedFrog->getFrogType();

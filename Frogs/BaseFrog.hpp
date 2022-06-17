@@ -36,13 +36,13 @@ public:
 
     auto checkIfDead() -> bool;
 
-    auto isAlive() const -> bool;
+    [[nodiscard]] auto isAlive() const -> bool;
 
-    int getFrogMaxHealth() const;
+    [[nodiscard]] int getFrogMaxHealth() const;
 
     auto declareDeadAndPrintDeadMessage() -> void;
 
-    auto attackFrog(BaseFrog *enemyFrog) const -> void;
+    auto attackFrog(std::shared_ptr<BaseFrog> enemyFrog) const -> void;
 
     BaseFrog(const std::string &frogName, int frogMaxHealth_, int frogMaxPower_, int frogAgility);
 
@@ -55,23 +55,23 @@ public:
 
     auto setHealth(int health) -> void;
 
-    auto getHealth() const -> int;
+    [[nodiscard]] auto getHealth() const -> int;
 
-    virtual auto getFrogType() const -> FrogType = 0;
+    [[nodiscard]] virtual auto getFrogType() const -> FrogType = 0;
 
-    auto getPower() const -> int;
+    [[nodiscard]] auto getPower() const -> int;
 
-    const std::string &getFrogName() const;
+    [[nodiscard]] const std::string &getFrogName() const;
 
-    int getFrogExpGive() const;
+    [[nodiscard]] int getFrogExpGive() const;
 
-    int getFrogAgility() const;
+    [[nodiscard]] int getFrogAgility() const;
 
-    auto calculateExpToTheNextLvl() const -> int;
+    [[nodiscard]] auto calculateExpToTheNextLvl() const -> int;
 
-    int getFrogLevel() const;
+    [[nodiscard]] int getFrogLevel() const;
 
-    BaseSpecialAttack *getSpecialAttack() const;
+    [[nodiscard]] BaseSpecialAttack *getSpecialAttack() const;
 
     auto setPower(int power) -> void;
 
@@ -79,13 +79,13 @@ public:
 
     auto frogCheckIfDefensiveSpecialAttackIsStillWorkingOn() -> bool;
 
-    auto getExpPoints() const -> int;
+    [[nodiscard]] auto getExpPoints() const -> int;
 
     auto frogAddExp(int expPoints) const -> void;
 
-    auto frogUseSpecialAttack(BaseFrog *frogsToUseSpecialAttack) const -> int;
+    [[nodiscard]] auto frogUseSpecialAttack(std::shared_ptr<BaseFrog> frogsToUseSpecialAttack) const -> int;
 
-    int getFrogMaxPower() const;
+    [[nodiscard]] int getFrogMaxPower() const;
 
     auto getFrogCurrentHp() -> int;
 

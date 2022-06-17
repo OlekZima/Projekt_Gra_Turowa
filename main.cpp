@@ -7,7 +7,7 @@
 
 auto getRandomNumber(int min, int max) -> int;
 
-auto createRandomFrog() -> BaseFrog *;
+auto createRandomFrog() -> std::shared_ptr<BaseFrog>;
 
 auto generateUsersFrog() -> std::array<BaseFrog *, 15>;
 
@@ -45,7 +45,7 @@ auto main() -> int {
 
         std::string inputForChooseFrogs;
 
-        auto frogs = std::array<BaseFrog *, 15>{};
+        auto frogs = std::array<std::shared_ptr<BaseFrog>, 15>{};
 
         for (int i = 0; i < 15; ++i) {
             frogs[i] = createRandomFrog();
@@ -53,7 +53,7 @@ auto main() -> int {
 
         difficulty = game_functions::chooseDifficulty();
 
-        std::array<BaseFrog *, 6> frogsUserChose{};
+        std::array<std::shared_ptr<BaseFrog>, 6> frogsUserChose{};
 
         int counter = 0;
 
@@ -84,6 +84,9 @@ auto main() -> int {
             }
         }
 
+        for (auto frog: frogs) {
+            frog.reset();
+        }
 
         int inputNumberForChoose = std::stoi(inputForChooseFrogs);
 
@@ -95,7 +98,7 @@ auto main() -> int {
                 std::cout << "Game is started!\n";
                 for (int i = 0; i < 4; ++i) {
                     std::cout << "There is a new enemy in the battle!\n";
-                    std::array<BaseFrog *, 4> frogsEnemy{};
+                    std::array<std::shared_ptr<BaseFrog>, 4> frogsEnemy{};
 
                     for (int i = 0; i < 4; ++i) {
                         frogsEnemy[i] = createRandomFrog();
@@ -116,7 +119,7 @@ auto main() -> int {
                         /// turn by user
                         std::cout << "Your turn!\n";
                         std::cout << "Choose frog number to attack:\n";
-                        BaseFrog *chosenUserFrog;
+                        std::shared_ptr<BaseFrog> chosenUserFrog;
                         int chosen;
                         std::string inputForChooseFrog;
                         while (inputForChooseFrog != "1" && inputForChooseFrog != "2" &&
@@ -267,6 +270,8 @@ auto main() -> int {
 
 }
 
+/*
+
 auto makeFrogsForUser() -> std::array<BaseFrog *, 15> {
 
     std::array<BaseFrog *, 15> frogsToUser{};
@@ -288,6 +293,7 @@ auto makeFrogsForUser() -> std::array<BaseFrog *, 15> {
     frogsToUser[14] = new AirFrog("Gerotora", 225, 66, 85);
     return frogsToUser;
 }
+*/
 
 const std::string &generateRandomName() {
     std::random_device rd;
@@ -304,61 +310,68 @@ const std::string &generateRandomName() {
 
 }
 
-auto createRandomFrog() -> BaseFrog * {
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(1, 6);
+auto createRandomFrog() -> std::shared_ptr<BaseFrog> {
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    static std::uniform_int_distribution<> dis(1, 6);
 
-    BaseFrog *frog;
+    std::shared_ptr<BaseFrog> frog;
 
     switch (dis(rd)) {
         case 1: {
-            frog = new WaterFrog();
-            //frog->frogGiveSpecialAttack(generateRandomSpecialAttack());
+            frog = std::make_shared<WaterFrog>();
+            //frog->frogGiveSpecialAttack((generateRandomSpecialAttack(frog));
             break;
         }
         case 2: {
-            frog = new EarthFrog();
-            //frog->frogGiveSpecialAttack(generateRandomSpecialAttack());
+            frog = std::make_shared<EarthFrog>();
+
+            //frog->frogGiveSpecialAttack((generateRandomSpecialAttack(frog));
             break;
         }
         case 3: {
-            frog = new AirFrog();
-            //frog->frogGiveSpecialAttack(generateRandomSpecialAttack());
+            frog = std::make_shared<AirFrog>();
+
+            //frog->frogGiveSpecialAttack((generateRandomSpecialAttack(frog));
             break;
         }
         case 4: {
-            frog = new FireFrog();
-           // frog->frogGiveSpecialAttack(generateRandomSpecialAttack());
+            frog = std::make_shared<FireFrog>();
+
+            // frog->frogGiveSpecialAttack((generateRandomSpecialAttack(frog));
             break;
         }
         case 5: {
-            frog = new IceFrog();
-           // frog->frogGiveSpecialAttack(generateRandomSpecialAttack());
+            frog = std::make_shared<IceFrog>();
+
+            // frog->frogGiveSpecialAttack((generateRandomSpecialAttack(frog));
             break;
         }
         case 6: {
-            frog = new SteelFrog();
-            //frog->frogGiveSpecialAttack(generateRandomSpecialAttack());
+            frog = std::make_shared<SteelFrog>();
+
+            //frog->frogGiveSpecialAttack((generateRandomSpecialAttack(frog));
             break;
         }
     }
 
     frog->setFrogName(generateRandomName());
-    frog->setFrogMaxHealth(getRandomNumber(200, 250));
-    frog->setFrogMaxPower(getRandomNumber(50, 80));
-    frog->setFrogAgility(getRandomNumber(10, 20));
+    frog->setFrogMaxHealth(std::uniform_int_distribution<>(200, 250)(gen));
+    frog->setFrogMaxPower(std::uniform_int_distribution<>(50, 80)(gen));
+    frog->setFrogAgility(std::uniform_int_distribution<>(40, 70)(gen));
 
     return frog;
 }
 
-auto getRandomNumber(int min, int max) -> int{
+/*
+auto getRandomNumber(int min, int max) -> int {
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> dis(min, max);
 
     return dis(rd);
 }
+*/
 
 BaseSpecialAttack *generateRandomSpecialAttack() {
     std::random_device rd;

@@ -5,5 +5,5 @@
 
 
 auto calculateDamageMultiplier(const BaseFrog *attackingFrog,
-                               BaseFrog *attackedFrog) -> float;
+                               std::shared_ptr<BaseFrog> attackedFrog) -> float;
 

@@ -59,7 +59,7 @@ int BaseFrog::getFrogExpGive() const {
     return frogExpGive_;
 }
 
-auto BaseFrog::attackFrog(BaseFrog *enemyFrog) const -> void {
+auto BaseFrog::attackFrog(std::shared_ptr<BaseFrog> enemyFrog) const -> void {
     if (enemyFrog->getFrogAgility() < frogAgility_) {
         auto damageMultiplier = calculateDamageMultiplier(this, enemyFrog);
         enemyFrog->setHealth(enemyFrog->getHealth() - frogPower_ * damageMultiplier);
@@ -90,7 +90,7 @@ bool BaseFrog::isAlive() const {
     return isAlive_;
 }
 
-auto BaseFrog::frogUseSpecialAttack(BaseFrog *frogsToUseSpecialAttack) const -> int {
+auto BaseFrog::frogUseSpecialAttack(std::shared_ptr<BaseFrog> frogsToUseSpecialAttack) const -> int {
     if (this->getSpecialAttack()->getSpecialAttackUses_() <
         this->getSpecialAttack()->getHowManyTimesSpecialAttackCanBeUsed()) {
         if (this->getSpecialAttack()->getSpecialAttackType_() == SpecialAttackType::DEFENSIVE) {
