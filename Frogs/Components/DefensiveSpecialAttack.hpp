@@ -3,9 +3,13 @@
 #include "Enums/SpecialAttackType.hpp"
 #include "BaseSpecialAttack.hpp"
 
-class BaseDefensiveSpecialAttack : BaseSpecialAttack {
+class DefensiveSpecialAttack : public BaseSpecialAttack {
 protected:
     SpecialAttackType specialAttackType_ = SpecialAttackType::DEFENSIVE;
     using BaseSpecialAttack::BaseSpecialAttack;
 
+public:
+    SpecialAttackType getSpecialAttackType_() const override;
+
+    ~DefensiveSpecialAttack() override;
 };

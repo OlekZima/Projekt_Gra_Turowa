@@ -8,16 +8,8 @@ BaseFrog::BaseFrog(const std::string &frogName, int frogMaxHealth_, int frogMaxP
         frogName_(frogName), frogMaxPower_(frogMaxPower_), frogMaxHealth_(frogMaxHealth_),
         frogAgility_(frogAgility) {};
 
-auto BaseFrog::setHealth(int health) -> void {
-    this->frogHealth_ = health;
-}
-
-auto BaseFrog::getHealth() const -> int {
-    return this->frogHealth_;
-}
-
-auto BaseFrog::getPower() const -> int {
-    return this->frogPower_;
+auto BaseFrog::setCurrentHp(int health) -> void {
+    this->frogCurrentHp_ = health;
 }
 
 auto BaseFrog::frogAddExp(int expPoints) const -> void {
@@ -45,9 +37,6 @@ int BaseFrog::getFrogLevel() const {
     return frogLevel_;
 }
 
-BaseSpecialAttack *BaseFrog::getSpecialAttack() const {
-    return frogSpecialAttack_;
-}
 
 auto BaseFrog::printLvlPromotion() -> void {
     std::cout << "Congratulations! Your frog " << this->frogName_ << "have reached level up! (" << this->frogLevel_
@@ -63,7 +52,7 @@ int BaseFrog::getFrogExpGive() const {
 auto BaseFrog::attackFrog(std::shared_ptr<BaseFrog> enemyFrog) const -> void {
     if (enemyFrog->getFrogAgility() < frogAgility_) {
         auto damageMultiplier = calculateDamageMultiplier(this, enemyFrog);
-        enemyFrog->setHealth(enemyFrog->getHealth() - this->getFrogPower() * damageMultiplier);
+        enemyFrog->setCurrentHp(enemyFrog->getFrogCurrentHp() - this->getFrogPower() * damageMultiplier);
         if (enemyFrog->checkIfDead()) {
             enemyFrog->declareDeadAndPrintDeadMessage();
             frogAddExp(enemyFrog->getFrogExpGive());
@@ -74,7 +63,7 @@ auto BaseFrog::attackFrog(std::shared_ptr<BaseFrog> enemyFrog) const -> void {
 }
 
 auto BaseFrog::checkIfDead() -> bool {
-    if (this->frogHealth_ <= 0) {
+    if (this->frogCurrentHp_ <= 0) {
         this->declareDeadAndPrintDeadMessage();
         return true;
     } else {
@@ -95,7 +84,7 @@ auto BaseFrog::frogUseSpecialAttack(std::shared_ptr<BaseFrog> frogsToUseSpecialA
     if (this->getSpecialAttack()->getSpecialAttackUses_() <
         this->getSpecialAttack()->getHowManyTimesSpecialAttackCanBeUsed()) {
         if (this->getSpecialAttack()->getSpecialAttackType_() == SpecialAttackType::DEFENSIVE) {
-            frogsToUseSpecialAttack->setPower(frogsToUseSpecialAttack->getPower() +
+            frogsToUseSpecialAttack->setPower(frogsToUseSpecialAttack->getFrogPower() +
                                               this->getSpecialAttack()->getSpecialAttackPower_());
 
             //------------------ prompt new
@@ -107,7 +96,7 @@ auto BaseFrog::frogUseSpecialAttack(std::shared_ptr<BaseFrog> frogsToUseSpecialA
             return 1;
         } else {
             auto damageMultiplier = calculateDamageMultiplier(this, frogsToUseSpecialAttack);
-            frogsToUseSpecialAttack->setPower(frogsToUseSpecialAttack->getPower() -
+            frogsToUseSpecialAttack->setPower(frogsToUseSpecialAttack->getFrogPower() -
                                               this->getSpecialAttack()->getSpecialAttackPower_() * damageMultiplier);
 
             std::cout << "prompt: \n";
@@ -130,7 +119,7 @@ int BaseFrog::getFrogMaxHealth() const {
 }
 
 auto BaseFrog::restoreHealth() -> void {
-    this->frogHealth_ = this->getFrogMaxHealth();
+    this->frogCurrentHp_ = this->getFrogMaxHealth();
 
 }
 
@@ -173,13 +162,17 @@ auto BaseFrog::frogCheckIfDefensiveSpecialAttackIsStillWorkingOn() -> bool {
 }
 
 auto BaseFrog::getFrogInfo() -> std::string {
-    return " [" + frogName_ + "](" +
-           std::to_string(this->getFrogHealth()) + " HP | " +
+    return " [" + this->getFrogName() + "](" +
+           std::to_string(this->getFrogCurrentHp()) + " HP | " +
            std::to_string(this->getFrogPower()) + " STR | " +
            std::to_string(this->getFrogAgility()) + " AGL | " +
            std::to_string(this->getFrogLevel()) + " LVL | " +
            std::to_string(this->getFrogExpPoints()) + " EXP) " +
-           game_functions::typeToString(this->getFrogType()) + " type\n";
+           game_functions::frogTypeToString(this->getFrogType()) + " type\n" +
+           "Special attack: " + this->getSpecialAttack()->getSpecialAttackName() + " (" +
+           std::to_string(this->getSpecialAttack()->getSpecialAttackPower_()) + " STR | " +
+           std::to_string(this->getSpecialAttack()->getHowManyTimesSpecialAttackCanBeUsed()) + " USES LEFT | " +
+           std::to_string(this->getSpecialAttack()->getHowManyRoundsWorking()) + " ROUNDS WORK)\n";
 }
 
 auto BaseFrog::getFrogExpPoints() -> int {
@@ -187,29 +180,14 @@ auto BaseFrog::getFrogExpPoints() -> int {
 }
 
 auto BaseFrog::getFrogCurrentHp() -> int {
-    return this->frogHealth_;
+    return this->frogCurrentHp_;
 }
 
-auto BaseFrog::FrogSetAgility(int agilityToSet) -> void {
-    this->frogAgility_ = agilityToSet;
-}
-
-int BaseFrog::FrogGetAgility() {
-    return this->frogAgility_;
-}
 
 BaseFrog::~BaseFrog() {
 
 }
 
-BaseFrog::BaseFrog(const std::string &frogName, int frogMaxHealth_, int frogMaxPower_, int frogAgility,
-                   BaseSpecialAttack *frogSpecialAttack) {
-    this->frogName_ = frogName;
-    this->frogMaxHealth_ = frogMaxHealth_;
-    this->frogMaxPower_ = frogMaxPower_;
-    this->frogAgility_ = frogAgility;
-    this->frogSpecialAttack_ = frogSpecialAttack;
-}
 
 BaseFrog::BaseFrog() {}
 
@@ -229,9 +207,6 @@ void BaseFrog::setFrogMaxPower(int frogMaxPower) {
     frogMaxPower_ = frogMaxPower;
 }
 
-int BaseFrog::getFrogHealth() const {
-    return frogHealth_;
-}
 
 int BaseFrog::getFrogPower() const {
     return frogPower_;
@@ -243,12 +218,20 @@ int BaseFrog::getFrogExpToTheNextLvl() const {
 
 auto BaseFrog::evolveHealth() -> void {
     this->frogMaxHealth_ += this->frogMaxHealth_ + 30;
-    this->frogHealth_ = this->frogMaxHealth_;
+    this->frogCurrentHp_ = this->frogMaxHealth_;
 }
 
 auto BaseFrog::evolvePower() -> void {
     this->frogMaxPower_ += this->frogMaxPower_ + 10;
     this->frogPower_ = this->frogMaxPower_;
+}
+
+auto BaseFrog::frogGiveSpecialAttack(std::shared_ptr<BaseSpecialAttack> baseSpecialAttack) -> void {
+    this->frogSpecialAttack_ = baseSpecialAttack;
+}
+
+std::shared_ptr<BaseSpecialAttack> BaseFrog::getSpecialAttack() const {
+    return std::shared_ptr<BaseSpecialAttack>();
 }
 
 

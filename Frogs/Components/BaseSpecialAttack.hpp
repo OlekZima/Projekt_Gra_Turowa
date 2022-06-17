@@ -12,31 +12,39 @@ protected:
     int specialAttackPower_;
     int specialAttackUses_ = 0;
     int howManyTimesSpecialAttackCanBeUsed_;
-    int specialAttackAgilityToAvoid_;
     SpecialAttackType specialAttackType_;
     int howManyRoundsWorking_;
 
 public:
-    int getHowManyRoundsWorking() const;
 
-    void setHowManyRoundsWorking(int howManyRoundsWorking);
+    ///CONSTRUCTORS AND DESTRUCTOR
 
-    auto resetSpecialAttackUses() -> void;
-
+    BaseSpecialAttack();
     BaseSpecialAttack(std::string specialAttackName_, int specialAttackPower_, int specialAttackAgilityToAvoid_,
                       int howManyTimesSpecialAttackCanBeUsed_, int howManyRoundsWorking_);
 
-    virtual SpecialAttackType getSpecialAttackType_() const = 0;
+    virtual ~BaseSpecialAttack();
 
+
+    ///GETTERS
+
+    int getHowManyRoundsWorking() const;
     int getSpecialAttackPower_() const;
-
     int getSpecialAttackUses_() const;
-
     int getHowManyTimesSpecialAttackCanBeUsed() const;
+    virtual SpecialAttackType getSpecialAttackType_() const = 0;
+    auto getSpecialAttackName() const -> std::string;
 
+    ///SETTERS
+
+    void setHowManyRoundsWorking(int howManyRoundsWorking);
+    void setSpecialAttackName(const std::string &specialAttackName);
+    void setSpecialAttackPower(int specialAttackPower);
+    void setHowManyTimesSpecialAttackCanBeUsed(int howManyTimesSpecialAttackCanBeUsed);
+
+    ///FUNCTIONS
+
+    auto resetSpecialAttackUses() -> void;
     auto useSpecialAttack() -> void;
 
-    int getSpecialAttackAgilityToAvoid() const;
-
-    auto getSpecialAttackName() const -> std::string;
 };

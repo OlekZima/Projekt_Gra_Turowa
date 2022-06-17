@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../BaseFrog.hpp"
-#include "BaseOffensiveSpecialAttack.hpp"
+#include "OffensiveSpecialAttack.hpp"
 
 
 auto calculateDamageMultiplier(const BaseFrog *attackingFrog,
