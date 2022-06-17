@@ -465,7 +465,7 @@ auto createRandomFrog() -> std::shared_ptr<BaseFrog> {
     int randomFrog = dis(gen);
 
     std::shared_ptr<BaseFrog> frog;
-
+///TODO: When generateRandomSpecialAttack will be done, uncomment this
     switch (randomFrog) {
         case 1: {
             frog = std::make_shared<WaterFrog>();
@@ -521,7 +521,7 @@ auto randomNumber(int min, int max) -> int {
     int a = silaDis(gen);
     return a;
 }
-
+///TODO: finish this function
 BaseSpecialAttack *generateRandomSpecialAttack() {
     std::random_device rd;
     std::mt19937 gen(rd());
