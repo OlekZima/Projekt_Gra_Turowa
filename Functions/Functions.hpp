@@ -1,6 +1,7 @@
 #pragma once
 
-#include "../Frogs/BaseFrog.hpp"
+#include "../Frogs/Components/Based/BaseFrog.hpp"
+#include "../Frogs/FrogsWithType.hpp"
 
 namespace game_functions {
     auto chooseDifficulty() -> int;
@@ -8,6 +9,9 @@ namespace game_functions {
     auto frogTypeToString(FrogType type) -> std::string;
 
     auto specialAttackTypeToString(SpecialAttackType type) -> std::string;
+
+    auto calculateDamageMultiplier(const BaseFrog *attackingFrog,
+                                   std::shared_ptr<BaseFrog> attackedFrog) -> float;
 
     auto randomNumber(int min, int max) -> int;
 

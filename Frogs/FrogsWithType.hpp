@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include "BaseFrog.hpp"
+#include "Components/Based/BaseFrog.hpp"
 
 class WaterFrog : public BaseFrog {
 public:

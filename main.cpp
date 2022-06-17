@@ -58,12 +58,13 @@ auto main() -> int {
         std::array<std::shared_ptr<BaseFrog>, 6> frogsUserChose{};
 
         int counter = 0;
+        std::cout << "It's time to choose your Team!\n";
+        std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 
         for (int i = 0; i < frogs.size(); ++i) {
             std::cout << "Frog # " << i + 1 << frogs[i]->getFrogInfo() << '\n';
         }
 
-        std::cout << "It's time to choose your Team!\n";
         std::cout << "Choose 6 frogs from the list!\n\n";
 
         while (counter != 6) {

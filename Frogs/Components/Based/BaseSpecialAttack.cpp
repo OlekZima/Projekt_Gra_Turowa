@@ -2,7 +2,7 @@
 #include <utility>
 #include "BaseSpecialAttack.hpp"
 
-BaseSpecialAttack::BaseSpecialAttack() = default;
+BaseSpecialAttack::BaseSpecialAttack() {};
 
 BaseSpecialAttack::BaseSpecialAttack(std::string specialAttackName_, int SpecialAttackPower_,
                                      int specialAttackAgilityToAvoid, int howManyTimesSpecialAttackCanBeUsed_,
@@ -16,11 +16,11 @@ auto BaseSpecialAttack::getSpecialAttackName() const -> std::string {
 }
 
 int BaseSpecialAttack::getSpecialAttackPower_() const {
-    return specialAttackPower_;
+    return this->specialAttackPower_;
 }
 
 int BaseSpecialAttack::getSpecialAttackUses_() const {
-    return specialAttackUses_;
+    return this->specialAttackUses_;
 }
 
 int BaseSpecialAttack::getHowManyTimesSpecialAttackCanBeUsed() const {
@@ -33,10 +33,7 @@ auto BaseSpecialAttack::useSpecialAttack() -> void {
 
 auto BaseSpecialAttack::resetSpecialAttackUses() -> void {
     specialAttackUses_ = 0;
-
 }
-
-
 
 void BaseSpecialAttack::setHowManyRoundsWorking(int howManyRoundsWorking) {
     howManyRoundsWorking_ = howManyRoundsWorking;
@@ -54,11 +51,13 @@ void BaseSpecialAttack::setHowManyTimesSpecialAttackCanBeUsed(int howManyTimesSp
     howManyTimesSpecialAttackCanBeUsed_ = howManyTimesSpecialAttackCanBeUsed;
 }
 
-int BaseSpecialAttack::getHowManyRoundsWorking() const {
+int BaseSpecialAttack::getHowManyRoundsWorking()  {
     return howManyRoundsWorking_;
 }
 
-BaseSpecialAttack::~BaseSpecialAttack() = default;
+BaseSpecialAttack::~BaseSpecialAttack() {}
+
+
 
 
 

@@ -2,8 +2,8 @@
 
 #include <string>
 #include <memory>
-#include "Components/Enums/FrogType.hpp"
-#include "Components/BaseSpecialAttack.hpp"
+#include "../Enums/FrogType.hpp"
+#include "BaseSpecialAttack.hpp"
 
 class BaseSpecialAttack;
 
@@ -33,21 +33,23 @@ public:
     ///GETTERS
 
     int getFrogMaxHealth() const;
-    auto getFrogCurrentHp() -> int;
+    auto getFrogCurrentHp() const -> int;
     int getFrogMaxPower() const;
     int getFrogPower() const;
     int getFrogAgility() const;
     int getFrogLevel() const;
-    auto getFrogExpPoints() -> int;
+    auto getFrogExpPoints() const -> int;
     int getFrogExpToTheNextLvl() const;
     const std::string &getFrogName() const;
     int getFrogExpGive() const;
     auto getExpPoints() const -> int;
-    std::shared_ptr<BaseSpecialAttack> getSpecialAttack() const;
+    static std::shared_ptr<BaseSpecialAttack> getSpecialAttack() ;
     auto getFrogInfo() -> std::string;
     virtual auto getFrogType() const -> FrogType = 0;
 
     ///SETTERS
+
+    void setFrogSpecialAttack(const std::shared_ptr<BaseSpecialAttack> &frogSpecialAttack);
 
     void setFrogName(const std::string &frogName);
     void setFrogMaxHealth(int frogMaxHealth);
@@ -55,7 +57,8 @@ public:
     void setFrogMaxPower(int frogMaxPower);
     auto setCurrentHp(int health) -> void;
     auto setPower(int power) -> void;
-    auto frogGiveSpecialAttack(std::shared_ptr<BaseSpecialAttack> baseSpecialAttack) -> void;
+
+
 
 
 
@@ -79,4 +82,5 @@ public:
     auto frogCheckIfOffensiveSpecialAttackIsStillWorkingOn() -> bool;
     auto frogCheckIfDefensiveSpecialAttackIsStillWorkingOn() -> bool;
 
+    const std::shared_ptr<BaseSpecialAttack> &getFrogSpecialAttack() const;
 };

@@ -2,15 +2,15 @@
 
 #include <array>
 #include "Enums/SpecialAttackType.hpp"
-#include "../BaseFrog.hpp"
-#include "BaseSpecialAttack.hpp"
+#include "Based/BaseFrog.hpp"
+#include "Based/BaseSpecialAttack.hpp"
 
 class OffensiveSpecialAttack : public BaseSpecialAttack {
 protected:
     SpecialAttackType specialAttackType_ = SpecialAttackType::OFFENSIVE;
-    using BaseSpecialAttack::BaseSpecialAttack;
 
 public:
+    using BaseSpecialAttack::BaseSpecialAttack;
     SpecialAttackType getSpecialAttackType_() const override;
 
     ~OffensiveSpecialAttack() override;

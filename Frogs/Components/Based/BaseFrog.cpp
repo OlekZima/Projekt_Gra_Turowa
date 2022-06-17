@@ -1,7 +1,5 @@
 #include "BaseFrog.hpp"
-#include "Components/damageMultiplier.hpp"
-#include "../Functions/Functions.hpp"
-#include <utility>
+#include "../../../Functions/Functions.hpp"
 #include <iostream>
 
 BaseFrog::BaseFrog(const std::string &frogName, int frogMaxHealth_, int frogMaxPower_, int frogAgility) :
@@ -51,7 +49,7 @@ int BaseFrog::getFrogExpGive() const {
 
 auto BaseFrog::attackFrog(std::shared_ptr<BaseFrog> enemyFrog) const -> void {
     if (enemyFrog->getFrogAgility() < frogAgility_) {
-        auto damageMultiplier = calculateDamageMultiplier(this, enemyFrog);
+        auto damageMultiplier = game_functions::calculateDamageMultiplier(this, enemyFrog);
         enemyFrog->setCurrentHp(enemyFrog->getFrogCurrentHp() - this->getFrogPower() * damageMultiplier);
         if (enemyFrog->checkIfDead()) {
             enemyFrog->declareDeadAndPrintDeadMessage();
@@ -92,21 +90,20 @@ auto BaseFrog::frogUseSpecialAttack(std::shared_ptr<BaseFrog> frogsToUseSpecialA
                       << " on frog " << frogsToUseSpecialAttack->getFrogName() << " and increased his power by "
                       << this->getSpecialAttack()->getSpecialAttackPower_() << "!\n";
             this->getSpecialAttack()->useSpecialAttack();
-            this->getSpecialAttack()->setHowManyRoundsWorking(3);
             return 1;
         } else {
-            auto damageMultiplier = calculateDamageMultiplier(this, frogsToUseSpecialAttack);
+            auto damageMultiplier = game_functions::calculateDamageMultiplier(this, frogsToUseSpecialAttack);
             frogsToUseSpecialAttack->setPower(frogsToUseSpecialAttack->getFrogPower() -
                                               this->getSpecialAttack()->getSpecialAttackPower_() * damageMultiplier);
 
             std::cout << "prompt: \n";
 
-            this->getSpecialAttack()->setHowManyRoundsWorking(3);
             this->getSpecialAttack()->useSpecialAttack();
 
         }
         return 1;
     }
+    return 0;
 }
 
 
@@ -169,17 +166,17 @@ auto BaseFrog::getFrogInfo() -> std::string {
            std::to_string(this->getFrogLevel()) + " LVL | " +
            std::to_string(this->getFrogExpPoints()) + " EXP) " +
            game_functions::frogTypeToString(this->getFrogType()) + " type\n" +
-           "Special attack: " + this->getSpecialAttack()->getSpecialAttackName() + " (" +
-           std::to_string(this->getSpecialAttack()->getSpecialAttackPower_()) + " STR | " +
-           std::to_string(this->getSpecialAttack()->getHowManyTimesSpecialAttackCanBeUsed()) + " USES LEFT | " +
-           std::to_string(this->getSpecialAttack()->getHowManyRoundsWorking()) + " ROUNDS WORK)\n";
+           "Special attack: " + BaseFrog::getSpecialAttack()->getSpecialAttackName() + " (" +
+           std::to_string(BaseFrog::getSpecialAttack()->getSpecialAttackPower_()) + " STR | " +
+           std::to_string(BaseFrog::getSpecialAttack()->getHowManyTimesSpecialAttackCanBeUsed()) + " USES LEFT | " +
+           std::to_string(BaseFrog::getSpecialAttack()->getHowManyRoundsWorking()) + " ROUNDS WORK)\n";
 }
 
-auto BaseFrog::getFrogExpPoints() -> int {
+auto BaseFrog::getFrogExpPoints() const -> int {
     return this->frogExpPoints_;
 }
 
-auto BaseFrog::getFrogCurrentHp() -> int {
+auto BaseFrog::getFrogCurrentHp() const -> int {
     return this->frogCurrentHp_;
 }
 
@@ -226,12 +223,15 @@ auto BaseFrog::evolvePower() -> void {
     this->frogPower_ = this->frogMaxPower_;
 }
 
-auto BaseFrog::frogGiveSpecialAttack(std::shared_ptr<BaseSpecialAttack> baseSpecialAttack) -> void {
-    this->frogSpecialAttack_ = baseSpecialAttack;
-}
-
-std::shared_ptr<BaseSpecialAttack> BaseFrog::getSpecialAttack() const {
+std::shared_ptr<BaseSpecialAttack> BaseFrog::getSpecialAttack() {
     return std::shared_ptr<BaseSpecialAttack>();
 }
 
+void BaseFrog::setFrogSpecialAttack(const std::shared_ptr<BaseSpecialAttack> &frogSpecialAttack) {
+    frogSpecialAttack_ = frogSpecialAttack;
+}
 
+
+const std::shared_ptr<BaseSpecialAttack> &BaseFrog::getFrogSpecialAttack() const {
+    return frogSpecialAttack_;
+}

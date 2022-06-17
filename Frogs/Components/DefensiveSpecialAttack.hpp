@@ -1,14 +1,14 @@
 #pragma once
 
 #include "Enums/SpecialAttackType.hpp"
-#include "BaseSpecialAttack.hpp"
+#include "Based/BaseSpecialAttack.hpp"
 
-class DefensiveSpecialAttack : public BaseSpecialAttack {
+class DefensiveSpecialAttack :public BaseSpecialAttack {
 protected:
     SpecialAttackType specialAttackType_ = SpecialAttackType::DEFENSIVE;
-    using BaseSpecialAttack::BaseSpecialAttack;
 
 public:
+    using BaseSpecialAttack::BaseSpecialAttack;
     SpecialAttackType getSpecialAttackType_() const override;
 
     ~DefensiveSpecialAttack() override;

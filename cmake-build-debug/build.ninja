@@ -55,11 +55,11 @@ build CMakeFiles/Projekt_Gra_Turowa.dir/main.cpp.obj: CXX_COMPILER__Projekt_Gra_
   OBJECT_DIR = CMakeFiles\Projekt_Gra_Turowa.dir
   OBJECT_FILE_DIR = CMakeFiles\Projekt_Gra_Turowa.dir
 
-build CMakeFiles/Projekt_Gra_Turowa.dir/Frogs/BaseFrog.cpp.obj: CXX_COMPILER__Projekt_Gra_Turowa_Debug C$:/Users/zimen/Desktop/Projekt_Gra_Turowa/Frogs/BaseFrog.cpp || cmake_object_order_depends_target_Projekt_Gra_Turowa
-  DEP_FILE = CMakeFiles\Projekt_Gra_Turowa.dir\Frogs\BaseFrog.cpp.obj.d
+build CMakeFiles/Projekt_Gra_Turowa.dir/Frogs/Components/Based/BaseFrog.cpp.obj: CXX_COMPILER__Projekt_Gra_Turowa_Debug C$:/Users/zimen/Desktop/Projekt_Gra_Turowa/Frogs/Components/Based/BaseFrog.cpp || cmake_object_order_depends_target_Projekt_Gra_Turowa
+  DEP_FILE = CMakeFiles\Projekt_Gra_Turowa.dir\Frogs\Components\Based\BaseFrog.cpp.obj.d
   FLAGS = -g -std=gnu++20
   OBJECT_DIR = CMakeFiles\Projekt_Gra_Turowa.dir
-  OBJECT_FILE_DIR = CMakeFiles\Projekt_Gra_Turowa.dir\Frogs
+  OBJECT_FILE_DIR = CMakeFiles\Projekt_Gra_Turowa.dir\Frogs\Components\Based
 
 build CMakeFiles/Projekt_Gra_Turowa.dir/Frogs/Components/DefensiveSpecialAttack.cpp.obj: CXX_COMPILER__Projekt_Gra_Turowa_Debug C$:/Users/zimen/Desktop/Projekt_Gra_Turowa/Frogs/Components/DefensiveSpecialAttack.cpp || cmake_object_order_depends_target_Projekt_Gra_Turowa
   DEP_FILE = CMakeFiles\Projekt_Gra_Turowa.dir\Frogs\Components\DefensiveSpecialAttack.cpp.obj.d
@@ -79,17 +79,11 @@ build CMakeFiles/Projekt_Gra_Turowa.dir/Frogs/FrogsWithType.cpp.obj: CXX_COMPILE
   OBJECT_DIR = CMakeFiles\Projekt_Gra_Turowa.dir
   OBJECT_FILE_DIR = CMakeFiles\Projekt_Gra_Turowa.dir\Frogs
 
-build CMakeFiles/Projekt_Gra_Turowa.dir/Frogs/Components/BaseSpecialAttack.cpp.obj: CXX_COMPILER__Projekt_Gra_Turowa_Debug C$:/Users/zimen/Desktop/Projekt_Gra_Turowa/Frogs/Components/BaseSpecialAttack.cpp || cmake_object_order_depends_target_Projekt_Gra_Turowa
-  DEP_FILE = CMakeFiles\Projekt_Gra_Turowa.dir\Frogs\Components\BaseSpecialAttack.cpp.obj.d
+build CMakeFiles/Projekt_Gra_Turowa.dir/Frogs/Components/Based/BaseSpecialAttack.cpp.obj: CXX_COMPILER__Projekt_Gra_Turowa_Debug C$:/Users/zimen/Desktop/Projekt_Gra_Turowa/Frogs/Components/Based/BaseSpecialAttack.cpp || cmake_object_order_depends_target_Projekt_Gra_Turowa
+  DEP_FILE = CMakeFiles\Projekt_Gra_Turowa.dir\Frogs\Components\Based\BaseSpecialAttack.cpp.obj.d
   FLAGS = -g -std=gnu++20
   OBJECT_DIR = CMakeFiles\Projekt_Gra_Turowa.dir
-  OBJECT_FILE_DIR = CMakeFiles\Projekt_Gra_Turowa.dir\Frogs\Components
-
-build CMakeFiles/Projekt_Gra_Turowa.dir/Frogs/Components/damageMultiplier.cpp.obj: CXX_COMPILER__Projekt_Gra_Turowa_Debug C$:/Users/zimen/Desktop/Projekt_Gra_Turowa/Frogs/Components/damageMultiplier.cpp || cmake_object_order_depends_target_Projekt_Gra_Turowa
-  DEP_FILE = CMakeFiles\Projekt_Gra_Turowa.dir\Frogs\Components\damageMultiplier.cpp.obj.d
-  FLAGS = -g -std=gnu++20
-  OBJECT_DIR = CMakeFiles\Projekt_Gra_Turowa.dir
-  OBJECT_FILE_DIR = CMakeFiles\Projekt_Gra_Turowa.dir\Frogs\Components
+  OBJECT_FILE_DIR = CMakeFiles\Projekt_Gra_Turowa.dir\Frogs\Components\Based
 
 build CMakeFiles/Projekt_Gra_Turowa.dir/Functions/Functions.cpp.obj: CXX_COMPILER__Projekt_Gra_Turowa_Debug C$:/Users/zimen/Desktop/Projekt_Gra_Turowa/Functions/Functions.cpp || cmake_object_order_depends_target_Projekt_Gra_Turowa
   DEP_FILE = CMakeFiles\Projekt_Gra_Turowa.dir\Functions\Functions.cpp.obj.d
@@ -105,7 +99,7 @@ build CMakeFiles/Projekt_Gra_Turowa.dir/Functions/Functions.cpp.obj: CXX_COMPILE
 #############################################
 # Link the executable Projekt_Gra_Turowa.exe
 
-build Projekt_Gra_Turowa.exe: CXX_EXECUTABLE_LINKER__Projekt_Gra_Turowa_Debug CMakeFiles/Projekt_Gra_Turowa.dir/main.cpp.obj CMakeFiles/Projekt_Gra_Turowa.dir/Frogs/BaseFrog.cpp.obj CMakeFiles/Projekt_Gra_Turowa.dir/Frogs/Components/DefensiveSpecialAttack.cpp.obj CMakeFiles/Projekt_Gra_Turowa.dir/Frogs/Components/OffensiveSpecialAttack.cpp.obj CMakeFiles/Projekt_Gra_Turowa.dir/Frogs/FrogsWithType.cpp.obj CMakeFiles/Projekt_Gra_Turowa.dir/Frogs/Components/BaseSpecialAttack.cpp.obj CMakeFiles/Projekt_Gra_Turowa.dir/Frogs/Components/damageMultiplier.cpp.obj CMakeFiles/Projekt_Gra_Turowa.dir/Functions/Functions.cpp.obj
+build Projekt_Gra_Turowa.exe: CXX_EXECUTABLE_LINKER__Projekt_Gra_Turowa_Debug CMakeFiles/Projekt_Gra_Turowa.dir/main.cpp.obj CMakeFiles/Projekt_Gra_Turowa.dir/Frogs/Components/Based/BaseFrog.cpp.obj CMakeFiles/Projekt_Gra_Turowa.dir/Frogs/Components/DefensiveSpecialAttack.cpp.obj CMakeFiles/Projekt_Gra_Turowa.dir/Frogs/Components/OffensiveSpecialAttack.cpp.obj CMakeFiles/Projekt_Gra_Turowa.dir/Frogs/FrogsWithType.cpp.obj CMakeFiles/Projekt_Gra_Turowa.dir/Frogs/Components/Based/BaseSpecialAttack.cpp.obj CMakeFiles/Projekt_Gra_Turowa.dir/Functions/Functions.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\Projekt_Gra_Turowa.dir

@@ -1,7 +1,7 @@
 #include <string>
 #include <iostream>
 #include <random>
-#include "../Frogs/BaseFrog.hpp"
+#include "../Frogs/Components/Based/BaseFrog.hpp"
 #include "Functions.hpp"
 #include "../Frogs/FrogsWithType.hpp"
 #include "../Frogs/Components/DefensiveSpecialAttack.hpp"
@@ -52,6 +52,7 @@ namespace game_functions {
             case FrogType::STEEL:
                 return "Steel";
         }
+        return "none";
     }
 
     auto specialAttackTypeToString(SpecialAttackType type) -> std::string {
@@ -61,6 +62,7 @@ namespace game_functions {
             case SpecialAttackType::OFFENSIVE:
                 return "Offensive";
         }
+        return "none";
     }
 
     const std::string &generateRandomName() {
@@ -89,71 +91,71 @@ namespace game_functions {
         switch (randomFrog) {
             case 1: {
                 frog = std::make_shared<WaterFrog>();
-                frog->frogGiveSpecialAttack(generateRandomSpecialAttack(frog->getFrogType()));
+                frog->setFrogSpecialAttack(generateRandomSpecialAttack(frog->getFrogType()));
                 break;
             }
             case 2: {
                 frog = std::make_shared<EarthFrog>();
 
-                frog->frogGiveSpecialAttack(generateRandomSpecialAttack(frog->getFrogType()));
+                frog->setFrogSpecialAttack(generateRandomSpecialAttack(frog->getFrogType()));
                 break;
             }
             case 3: {
                 frog = std::make_shared<AirFrog>();
 
-                frog->frogGiveSpecialAttack(generateRandomSpecialAttack(frog->getFrogType()));
+                frog->setFrogSpecialAttack(generateRandomSpecialAttack(frog->getFrogType()));
                 break;
             }
             case 4: {
                 frog = std::make_shared<FireFrog>();
 
-                frog->frogGiveSpecialAttack(generateRandomSpecialAttack(frog->getFrogType()));
+                frog->setFrogSpecialAttack(generateRandomSpecialAttack(frog->getFrogType()));
                 break;
             }
             case 5: {
                 frog = std::make_shared<IceFrog>();
 
-                frog->frogGiveSpecialAttack(generateRandomSpecialAttack(frog->getFrogType()));
+                frog->setFrogSpecialAttack(generateRandomSpecialAttack(frog->getFrogType()));
                 break;
             }
             case 6: {
                 frog = std::make_shared<SteelFrog>();
 
-                frog->frogGiveSpecialAttack(generateRandomSpecialAttack(frog->getFrogType()));
+                frog->setFrogSpecialAttack(generateRandomSpecialAttack(frog->getFrogType()));
                 break;
             }
         }
 
         frog->setFrogName(generateRandomName());
-        frog->setFrogMaxHealth(randomNumber(200, 250));
+        frog->setFrogMaxHealth(std::uniform_int_distribution<>(200, 250)(gen));
         frog->setCurrentHp(frog->getFrogMaxHealth());
-        frog->setFrogMaxPower(randomNumber(50, 80));
+        frog->setFrogMaxPower(std::uniform_int_distribution<>(50, 80)(gen));
         frog->setPower(frog->getFrogMaxPower());
-        frog->setFrogAgility(randomNumber(40, 70));
+        frog->setFrogAgility(std::uniform_int_distribution<>(40, 70)(gen));
 
         return frog;
     }
 
-    auto randomNumber(int min, int max) -> int {
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        std::uniform_int_distribution<> silaDis(min, max);
-        int a = silaDis(gen);
-        return a;
-    }
+    /*  auto randomNumber(int min, int max) -> int {
+          std::random_device rd;
+          std::mt19937 gen(rd());
+          std::uniform_int_distribution<> silaDis(min, max);
+          int a = silaDis(gen);
+          return a;
+      }*/
 
-    auto generateRandomSpecialAttack(const FrogType frogType) -> std::shared_ptr<BaseSpecialAttack> {
+    auto generateRandomSpecialAttack(FrogType frogType) -> std::shared_ptr<BaseSpecialAttack> {
         std::random_device rd;
         std::mt19937 gen(rd());
-        std::uniform_int_distribution<> dis(1, 6);
+        std::uniform_int_distribution<> ds(1, 2);
+
+        int randomSpecialAttack = ds(gen);
 
         std::shared_ptr<BaseSpecialAttack> specialAttack;
 
-        int randomSpecialAttackType = std::uniform_int_distribution<>(1, 2)(gen);
-
         switch (frogType) {
             case FrogType::WATER : {
-                switch (randomSpecialAttackType) {
+                switch (randomSpecialAttack) {
                     case 1: {
                         specialAttack = std::make_shared<DefensiveSpecialAttack>();
                         specialAttack->setSpecialAttackName("Water Fists");
@@ -167,7 +169,7 @@ namespace game_functions {
                 }
             }
             case FrogType::EARTH: {
-                switch (randomSpecialAttackType) {
+                switch (randomSpecialAttack) {
                     case 1: {
                         specialAttack = std::make_shared<DefensiveSpecialAttack>();
                         specialAttack->setSpecialAttackName("Earth Fists");
@@ -181,7 +183,7 @@ namespace game_functions {
                 }
             }
             case FrogType::AIR: {
-                switch (randomSpecialAttackType) {
+                switch (randomSpecialAttack) {
                     case 1: {
                         specialAttack = std::make_shared<DefensiveSpecialAttack>();
                         specialAttack->setSpecialAttackName("Air Fists");
@@ -195,7 +197,7 @@ namespace game_functions {
                 }
             }
             case FrogType::FIRE: {
-                switch (randomSpecialAttackType) {
+                switch (randomSpecialAttack) {
                     case 1: {
                         specialAttack = std::make_shared<DefensiveSpecialAttack>();
                         specialAttack->setSpecialAttackName("Fire Fists");
@@ -209,7 +211,7 @@ namespace game_functions {
                 }
             }
             case FrogType::ICE: {
-                switch (randomSpecialAttackType) {
+                switch (randomSpecialAttack) {
                     case 1: {
                         specialAttack = std::make_shared<DefensiveSpecialAttack>();
                         specialAttack->setSpecialAttackName("Ice Fists");
@@ -223,7 +225,7 @@ namespace game_functions {
                 }
             }
             case FrogType::STEEL: {
-                switch (randomSpecialAttackType) {
+                switch (randomSpecialAttack) {
                     case 1: {
                         specialAttack = std::make_shared<DefensiveSpecialAttack>();
                         specialAttack->setSpecialAttackName("Steel Fists");
@@ -237,13 +239,49 @@ namespace game_functions {
                 }
             }
         }
-        specialAttack->setHowManyTimesSpecialAttackCanBeUsed(randomNumber(1, 3));
-        specialAttack->setSpecialAttackPower(randomNumber(50, 100));
+        specialAttack->setHowManyTimesSpecialAttackCanBeUsed(std::uniform_int_distribution<>(1, 3)(gen));
+        specialAttack->setSpecialAttackPower(std::uniform_int_distribution<>(50, 100)(gen));
+        specialAttack->setHowManyRoundsWorking(3);
         return specialAttack;
     }
 
     auto Battle() -> void {
 
+    }
+
+
+    auto calculateDamageMultiplier(const BaseFrog *attackingFrog,
+                                   std::shared_ptr<BaseFrog> attackedFrog) -> float {
+
+        auto attackingFrogType = attackingFrog->getFrogType();
+        auto attackedFrogType = attackedFrog->getFrogType();
+
+        if (attackingFrogType == FrogType::EARTH && attackedFrogType == FrogType::AIR
+            || attackingFrogType == FrogType::AIR &&
+               (attackedFrogType == FrogType::EARTH || attackedFrogType == FrogType::STEEL)
+            || attackingFrogType == FrogType::FIRE &&
+               (attackedFrogType == FrogType::WATER || attackedFrogType == FrogType::EARTH)
+            || attackingFrogType == FrogType::ICE &&
+               (attackedFrogType == FrogType::WATER || attackedFrogType == FrogType::FIRE)
+            || attackingFrogType == FrogType::STEEL && attackedFrogType == FrogType::FIRE
+            || attackingFrogType == FrogType::WATER && attackedFrogType == FrogType::WATER
+            || attackingFrogType == FrogType::STEEL && attackedFrogType == FrogType::STEEL
+            || attackingFrogType == FrogType::ICE && attackedFrogType == FrogType::ICE) {
+            return 1 / 2;
+        } else if (attackingFrogType == FrogType::WATER &&
+                   (attackedFrogType == FrogType::EARTH || attackedFrogType == FrogType::FIRE)
+                   || attackingFrogType == FrogType::EARTH &&
+                      (attackedFrogType == FrogType::FIRE || attackedFrogType == FrogType::ICE ||
+                       attackedFrogType == FrogType::STEEL)
+                   || attackingFrogType == FrogType::AIR && attackedFrogType == FrogType::ICE
+                   || attackingFrogType == FrogType::FIRE &&
+                      (attackedFrogType == FrogType::ICE || attackedFrogType == FrogType::STEEL)
+                   || attackingFrogType == FrogType::ICE && attackedFrogType == FrogType::EARTH
+                   || attackingFrogType == FrogType::STEEL && attackedFrogType == FrogType::AIR) {
+            return 2;
+        } else {
+            return 1;
+        }
     }
 
 };

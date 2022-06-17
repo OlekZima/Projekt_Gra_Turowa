@@ -1,14 +1,12 @@
 #include <iostream>
 #include "FrogsWithType.hpp"
-//#define DEBUG
 
 auto WaterFrog::getFrogType() const -> FrogType {
     return FrogType::WATER;
 }
 
-WaterFrog::~WaterFrog()  {
-/*#ifdef DEBUG
-#endif*/
+WaterFrog::~WaterFrog() {
+
 }
 
 auto EarthFrog::getFrogType() const -> FrogType {
@@ -16,8 +14,7 @@ auto EarthFrog::getFrogType() const -> FrogType {
 }
 
 EarthFrog::~EarthFrog() {
-/*#ifdef DEBUG
-#endif*/
+
 }
 
 auto AirFrog::getFrogType() const -> FrogType {
@@ -25,8 +22,7 @@ auto AirFrog::getFrogType() const -> FrogType {
 }
 
 AirFrog::~AirFrog() {
-/*#ifdef DEBUG
-#endif*/
+
 }
 
 auto FireFrog::getFrogType() const -> FrogType {
@@ -34,9 +30,7 @@ auto FireFrog::getFrogType() const -> FrogType {
 }
 
 FireFrog::~FireFrog() {
-/*#ifdef DEBUG
 
-#endif*/
 }
 
 auto IceFrog::getFrogType() const -> FrogType {
@@ -44,9 +38,7 @@ auto IceFrog::getFrogType() const -> FrogType {
 }
 
 IceFrog::~IceFrog() {
-/*#ifdef DEBUG
 
-#endif*/
 }
 
 auto SteelFrog::getFrogType() const -> FrogType {
@@ -54,7 +46,5 @@ auto SteelFrog::getFrogType() const -> FrogType {
 }
 
 SteelFrog::~SteelFrog() {
-/*#ifdef DEBUG
-    std::cout << "Destructor of SteelFrog" << std::endl;
-#endif*/
+
 }
