@@ -5,7 +5,7 @@
 #include "./Frogs/FrogsWithType.hpp"
 #include "./Functions/Functions.hpp"
 
-auto getRandomNumber(int min, int max) -> int;
+auto randomNumber(int min, int max) -> int;
 
 auto createRandomFrog() -> std::shared_ptr<BaseFrog>;
 
@@ -20,6 +20,7 @@ BaseSpecialAttack *generateRandomSpecialAttack();
 const std::string &generateRandomName();
 
 auto main() -> int {
+
     std::cout << "Welcome to the Game of Frogs, User!\n";
     std::string input;
     int difficulty = 0;
@@ -104,6 +105,8 @@ auto main() -> int {
                         frogsEnemy[i] = createRandomFrog();
                     }
 
+                    std::shared_ptr<BaseFrog> chosenUserFrog = frogsUserChose[0];
+
                     std::cout << "Battle " << i + 1 << '\n';
                     while (((frogsUserChose[0])->getHealth() > 0 &&
                             (frogsUserChose[1])->getHealth() > 0 &&
@@ -115,14 +118,144 @@ auto main() -> int {
                             frogsEnemy[1]->getHealth() > 0 &&
                             frogsEnemy[2]->getHealth() > 0 &&
                             frogsEnemy[3]->getHealth() > 0)) {
-                        ///TODO:
-                        /// turn by user
+
                         std::cout << "Your turn!\n";
-                        std::cout << "Choose frog number to attack:\n";
-                        std::shared_ptr<BaseFrog> chosenUserFrog;
-                        int chosen;
+                        std::cout << "Choose your action:\n";
                         std::string inputForChooseFrog;
-                        while (inputForChooseFrog != "1" && inputForChooseFrog != "2" &&
+
+                        std::cout << "1. Attack\n";
+                        std::cout << "2. Special Attack\n";
+                        std::cout << "3. Change current frog in the fight\n";
+                        std::cout << "4. Evolve current frog\n";
+
+                        while (inputForChooseFrog != "1" && inputForChooseFrog != "2" && inputForChooseFrog != "3" &&
+                               inputForChooseFrog != "4") {
+                            std::cin >> inputForChooseFrog;
+
+                            if (inputForChooseFrog == "-h" || inputForChooseFrog == "--help") {
+                                std::cout << "Manual: \n";
+                            } else if (inputForChooseFrog != "1" && inputForChooseFrog != "2" &&
+                                       inputForChooseFrog != "3" && inputForChooseFrog != "4") {
+                                std::cout << "Wrong input!\n";
+                            }
+                        }
+
+
+                        int inputChecked = std::stoi(inputForChooseFrog);
+
+                        std::shared_ptr<BaseFrog> enemyFrog;
+
+                        if (frogsEnemy[0]->getHealth() > 0) {
+                            enemyFrog = frogsEnemy[0];
+                        } else if (frogsEnemy[1]->getHealth() > 0) {
+                            enemyFrog = frogsEnemy[1];
+                        } else if (frogsEnemy[2]->getHealth() > 0) {
+                            enemyFrog = frogsEnemy[2];
+                        } else {
+                            enemyFrog = frogsEnemy[3];
+                        }
+
+                        switch (inputChecked) {
+                            case 1: {
+                                std::cout << "You chose Attack!\n";
+                                chosenUserFrog->attackFrog(enemyFrog);
+                                std::cout << "prompt\n";
+                                break;
+                            }
+                            case 2: {
+                                std::cout << "You chose Special Attack!\n";
+                                switch (chosenUserFrog->getSpecialAttack()->getSpecialAttackType_()) {
+                                    case SpecialAttackType::DEFENSIVE: {
+                                        std::cout << "You chose Defensive Attack!\n";
+                                        chosenUserFrog->frogUseSpecialAttack(chosenUserFrog);
+                                        break;
+                                    }
+                                    case SpecialAttackType::OFFENSIVE: {
+                                        std::cout << "You chose Offensive Attack!\n";
+                                        chosenUserFrog->frogUseSpecialAttack(enemyFrog);
+                                        break;
+                                    }
+                                }
+                                break;
+                            }
+                            case 3: {
+                                if (chosenUserFrog->getExpPoints() >= chosenUserFrog->getFrogExpToTheNextLvl()) {
+                                    std::cout << "prompt \n";
+                                    std::string inputForEvolveFrog;
+                                    ///TODO: attributes
+                                    std::cout << "Choose attribute to upgrade:\n";
+                                    while (inputForEvolveFrog != "1" && inputForEvolveFrog != "2" &&
+                                           inputForEvolveFrog != "3") {
+                                        std::cin >> inputForEvolveFrog;
+                                        if (inputForEvolveFrog == "-h" || inputForEvolveFrog == "--help") {
+                                            std::cout << "Manual: \n";
+                                        } else if (inputForEvolveFrog != "1" && inputForEvolveFrog != "2" &&
+                                                   inputForEvolveFrog != "3") {
+                                            std::cout << "Wrong input!\n";
+                                        }
+                                    }
+                                    int inputCheckedForEvolve = std::stoi(inputForEvolveFrog);
+
+                                    switch (inputCheckedForEvolve) {
+                                        case 1: {
+                                            std::cout << "You chose to upgrade Health!\n";
+                                            chosenUserFrog->evolveHealth();
+                                            break;
+                                        }
+                                        case 2: {
+                                            std::cout << "You chose to upgrade Power!\n";
+                                            chosenUserFrog->evolvePower();
+                                            break;
+                                        }
+                                        case 3: {
+                                            std::cout << "You chose to upgrade Agility!\n";
+                                            chosenUserFrog->setFrogAgility(chosenUserFrog->getFrogAgility() + 15);
+                                            break;
+                                        }
+                                    }
+                                    break;
+                                }
+                                ///TODO: prompt
+                                std::cout << "prompt \n";
+
+                                break;
+                            }
+                            case 4: {
+                                std::cout << "You chose to change current frog!\n";
+                                std::string inputForChangeFrog;
+                                auto flag = false;
+                                int inputCheckedForChangeFrog;
+                                while (!flag) {
+                                    std::cout << "prompt\n";
+
+                                    std::cin >> inputForChangeFrog;
+
+                                    while (inputForChangeFrog != "1" && inputForChangeFrog != "2" &&
+                                           inputForChangeFrog != "3" && inputForChangeFrog != "4" &&
+                                           inputForChangeFrog != "5" && inputForChangeFrog != "6") {
+                                        if (inputForChangeFrog == "-h" || inputForChangeFrog == "--help") {
+                                            std::cout << "Manual: \n";
+                                        } else if (inputForChangeFrog != "1" || inputForChangeFrog != "2" ||
+                                                   inputForChangeFrog != "3" || inputForChangeFrog != "4" ||
+                                                   inputForChangeFrog != "5" || inputForChangeFrog != "6") {
+                                            std::cout << "Wrong input!\n";
+                                        }
+                                    }
+                                    inputCheckedForChangeFrog = std::stoi(inputForChangeFrog);
+                                    if (frogsUserChose[inputCheckedForChangeFrog - 1]->getHealth() > 0) {
+                                        chosenUserFrog = frogsUserChose[inputCheckedForChangeFrog - 1];
+                                        flag = true;
+                                    } else {
+                                        /// TODO: prompt about dead frog chosen for try again
+                                        std::cout << "prompt\n";
+                                    }
+                                }
+                                break;
+                            }
+
+                        }
+
+                        /*while (inputForChooseFrog != "1" && inputForChooseFrog != "2" &&
                                inputForChooseFrog != "3" && inputForChooseFrog != "4" &&
                                inputForChooseFrog != "5" && inputForChooseFrog != "6") {
                             std::cin >> inputForChooseFrog;
@@ -132,70 +265,68 @@ auto main() -> int {
                             } else if (inputForChooseFrog < "1" && inputForChooseFrog > "6") {
                                 std::cout << "Wrong input!\n";
                             }
-                        }
-                        chosen = std::stoi(inputForChooseFrog) - 1;
-                        if ((frogsUserChose[chosen])->getHealth() > 0) {
-                            std::string inputForAction;
-                            std::cout << "Choose your action!\n";
-                            while (inputForAction != "1" && inputForAction != "2") {
-                                std::cout << "1. Attack\n" << "2. Special Attack\n";
-                                std::cin >> inputForAction;
-                                if (inputForAction == "--help" || inputForAction == "-h") {
-                                    std::cout << "Here you can choose your action\n" <<
-                                              "Choose wisely!\n\n";
-                                } else if (inputForAction != "1" && inputForAction != "2") {
-                                    std::cout << "Wrong input!\n";
-                                }
-                            }
+                        }*/
+                        /*  chosen = std::stoi(inputForChooseFrog) - 1;
+                          if ((frogsUserChose[chosen])->getHealth() > 0) {
+                              std::string inputForAction;
+                              std::cout << "Choose your action!\n";
+                              while (inputForAction != "1" && inputForAction != "2") {
+                                  std::cout << "1. Attack\n" << "2. Special Attack\n";
+                                  std::cin >> inputForAction;
+                                  if (inputForAction == "--help" || inputForAction == "-h") {
+                                      std::cout << "Here you can choose your action\n" <<
+                                                "Choose wisely!\n\n";
+                                  } else if (inputForAction != "1" && inputForAction != "2") {
+                                      std::cout << "Wrong input!\n";
+                                  }
+                              }*/
+                        /*   int chosenAction = std::stoi(inputForAction);
 
-                            int chosenAction = std::stoi(inputForAction);
+                           std::string chooseEnemyFrogToAttack;
 
-                            std::string chooseEnemyFrogToAttack;
+                           while (chooseEnemyFrogToAttack != "1" && chooseEnemyFrogToAttack != "2" &&
+                                  chooseEnemyFrogToAttack != "3" && chooseEnemyFrogToAttack != "4") {
+                               std::cout << "Choose frog number to attack it:\n";
 
-                            while (chooseEnemyFrogToAttack != "1" && chooseEnemyFrogToAttack != "2" &&
-                                   chooseEnemyFrogToAttack != "3" && chooseEnemyFrogToAttack != "4") {
-                                std::cout << "Choose frog number to attack it:\n";
+                               std::cin >> chooseEnemyFrogToAttack;
+                               if (chooseEnemyFrogToAttack == "--help" || chooseEnemyFrogToAttack == "-h") {
+                                   std::cout << "Now you can choose frog number from the list to attack it!\n";
+                               } else if (chooseEnemyFrogToAttack < "1" && chooseEnemyFrogToAttack > "4") {
+                                   std::cout << "Wrong input!\n";
+                               }
+                           }
 
-                                std::cin >> chooseEnemyFrogToAttack;
-                                if (chooseEnemyFrogToAttack == "--help" || chooseEnemyFrogToAttack == "-h") {
-                                    std::cout << "Now you can choose frog number from the list to attack it!\n";
-                                } else if (chooseEnemyFrogToAttack < "1" && chooseEnemyFrogToAttack > "4") {
-                                    std::cout << "Wrong input!\n";
-                                }
-                            }
+                           int chosenEnemyFrogToAttack = std::stoi(chooseEnemyFrogToAttack) - 1;
+                           chosenUserFrog->attackFrog(frogsEnemy[chosenEnemyFrogToAttack]);
+*/
+                        /*   if (frogsEnemy[0]->getHealth() > 0) {
+                               std::cout << "Enemy chose frog # 1 to attack!\n";
+                               if (frogsEnemy[0]->frogUseSpecialAttack(chosenUserFrog) == 0) {
+                                   frogsEnemy[0]->attackFrog(chosenUserFrog);
+                               }
+                           } else if (frogsEnemy[1]->getHealth() > 0) {
+                               std::cout << "Enemy chose frog # 2 to attack!\n";
+                               if (frogsEnemy[1]->frogUseSpecialAttack(chosenUserFrog) == 0) {
+                                   frogsEnemy[1]->attackFrog(chosenUserFrog);
+                               }
 
-                            int chosenEnemyFrogToAttack = std::stoi(chooseEnemyFrogToAttack) - 1;
-                            chosenUserFrog->attackFrog(frogsEnemy[chosenEnemyFrogToAttack]);
+                           } else if (frogsEnemy[2]->getHealth() > 0) {
+                               std::cout << "Enemy chose frog # 3 to attack!\n";
+                               if (frogsEnemy[2]->frogUseSpecialAttack(chosenUserFrog) == 0) {
+                                   frogsEnemy[2]->attackFrog(chosenUserFrog);
+                               }
 
-
-                            if (frogsEnemy[0]->getHealth() > 0) {
-                                std::cout << "Enemy chose frog # 1 to attack!\n";
-                                if (frogsEnemy[0]->frogUseSpecialAttack(chosenUserFrog) == 0) {
-                                    frogsEnemy[0]->attackFrog(chosenUserFrog);
-                                }
-                            } else if (frogsEnemy[1]->getHealth() > 0) {
-                                std::cout << "Enemy chose frog # 2 to attack!\n";
-                                if (frogsEnemy[1]->frogUseSpecialAttack(chosenUserFrog) == 0) {
-                                    frogsEnemy[1]->attackFrog(chosenUserFrog);
-                                }
-
-                            } else if (frogsEnemy[2]->getHealth() > 0) {
-                                std::cout << "Enemy chose frog # 3 to attack!\n";
-                                if (frogsEnemy[2]->frogUseSpecialAttack(chosenUserFrog) == 0) {
-                                    frogsEnemy[2]->attackFrog(chosenUserFrog);
-                                }
-
-                            } else {
-                                if (frogsEnemy[3]->frogUseSpecialAttack(chosenUserFrog) == 0) {
-                                    frogsEnemy[3]->attackFrog(chosenUserFrog);
-                                }
-                            }
+                           } else {
+                               if (frogsEnemy[3]->frogUseSpecialAttack(chosenUserFrog) == 0) {
+                                   frogsEnemy[3]->attackFrog(chosenUserFrog);
+                               }
+                           }
 
 
-                        } else {
-                            std::cout << "You can't choose dead frog!\n";
-                            continue;
-                        }
+                       } else {
+                           std::cout << "You can't choose dead frog!\n";
+                           continue;
+                       }*/
 
 
                         std::cout << "Enemy turn!\n";
@@ -216,10 +347,51 @@ auto main() -> int {
                                 frogsEnemy[2]->attackFrog(chosenUserFrog);
                             }
 
-                        } else {
+                        } else if (frogsEnemy[3]->getHealth() > 0) {
                             if (frogsEnemy[3]->frogUseSpecialAttack(chosenUserFrog) == 0) {
                                 frogsEnemy[3]->attackFrog(chosenUserFrog);
                             }
+                        } else {
+                            ///TODO: prompt about dead for enemy
+                            std::cout << "Enemy can't attack! You killed whole team!\n" <<
+                                      "Round won!\n";
+
+                            for (auto frog: frogsUserChose) {
+                                frog->restoreHealth();
+                            }
+
+                            continue;
+                        }
+
+                        if (frogsUserChose[0]->getHealth() <= 0 && frogsUserChose[1]->getHealth() <= 0 &&
+                            frogsUserChose[2]->getHealth() <= 0 &&
+                            frogsUserChose[3]->getHealth() <= 0 && frogsUserChose[4]->getHealth() <= 0 &&
+                            frogsUserChose[5]->getHealth() <= 0) {
+                            std::cout << "Enemy killed whole your team!\n" <<
+                                      "Game Over!\n";
+                            break;
+                        }
+
+
+                        //TODO: same shit for enemy
+                        if (chosenUserFrog->getSpecialAttack()->getHowManyRoundsWorking() > 0) {
+                            if (chosenUserFrog->getSpecialAttack()->getHowManyRoundsWorking() == 1) {
+                                switch (chosenUserFrog->getSpecialAttack()->getSpecialAttackType_()) {
+                                    case SpecialAttackType::DEFENSIVE: {
+                                        std::cout << "prompt  end of special attack bonus\n";
+                                        chosenUserFrog->restoreStats();
+                                        break;
+                                    }
+                                    case SpecialAttackType::OFFENSIVE: {
+                                        std::cout << "prompt  end of special attack debuff for enemy\n";
+                                        enemyFrog->restoreStats();
+                                        break;
+                                    }
+                                }
+                            }
+                            chosenUserFrog->getSpecialAttack()->setHowManyRoundsWorking(
+                                    chosenUserFrog->getSpecialAttack()->getHowManyRoundsWorking() - 1);
+
                         }
 
 
@@ -270,37 +442,13 @@ auto main() -> int {
 
 }
 
-/*
-
-auto makeFrogsForUser() -> std::array<BaseFrog *, 15> {
-
-    std::array<BaseFrog *, 15> frogsToUser{};
-
-    frogsToUser[0] = new WaterFrog("Fukasaku", 247, 55, 15);
-    frogsToUser[1] = new WaterFrog("Gama", 212, 77, 20);
-    frogsToUser[2] = new WaterFrog("Gamabunta", 227, 54, 25);
-    frogsToUser[3] = new EarthFrog("Gamaden", 243, 77, 30);
-    frogsToUser[4] = new EarthFrog("Gamagorō", 229, 51, 35);
-    frogsToUser[5] = new EarthFrog("Gamahiro", 250, 55, 40);
-    frogsToUser[6] = new AirFrog("Gamaken", 209, 67, 45);
-    frogsToUser[7] = new AirFrog("Gamakichi", 236, 62, 50);
-    frogsToUser[8] = new FireFrog("Gamamaru", 201, 67, 55);
-    frogsToUser[9] = new FireFrog("Gamamichi", 218, 78, 60);
-    frogsToUser[10] = new FireFrog("Gamariki", 231, 75, 65);
-    frogsToUser[11] = new SteelFrog("Gamatama", 207, 74, 70);
-    frogsToUser[12] = new SteelFrog("Gamatatsu", 205, 61, 75);
-    frogsToUser[13] = new SteelFrog("Gekomatsu", 224, 68, 80);
-    frogsToUser[14] = new AirFrog("Gerotora", 225, 66, 85);
-    return frogsToUser;
-}
-*/
-
 const std::string &generateRandomName() {
     std::random_device rd;
     std::mt19937 gen(rd());
 
-    auto frogNames = std::vector<std::string>{
-            "Bulba", "Kamien", "Wiatr", "Ognie", "Lod", "Stal", "Fukasaku", "Gama", "Gamabunta", "Gamaden", "Gamagorō",
+    auto frogNames = std::array<std::string, 22>{
+            "Bulba", "Kamien", "Wiatr", "Ognie", "Lod", "Stal", "Fukasaku", "Gama", "Gamabunta", "Gamaden",
+            "Gamagorō",
             "Gamahiro", "Gamaken", "Gamakichi", "Gamamaru", "Gamamichi", "Gamariki", "Gamatama", "Gamatatsu",
             "Gekomatsu", "Gerotora"
     };
@@ -311,13 +459,14 @@ const std::string &generateRandomName() {
 }
 
 auto createRandomFrog() -> std::shared_ptr<BaseFrog> {
-    static std::random_device rd;
-    static std::mt19937 gen(rd());
-    static std::uniform_int_distribution<> dis(1, 6);
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(1, 6);
+    int randomFrog = dis(gen);
 
     std::shared_ptr<BaseFrog> frog;
 
-    switch (dis(rd)) {
+    switch (randomFrog) {
         case 1: {
             frog = std::make_shared<WaterFrog>();
             //frog->frogGiveSpecialAttack((generateRandomSpecialAttack(frog));
@@ -357,21 +506,21 @@ auto createRandomFrog() -> std::shared_ptr<BaseFrog> {
 
     frog->setFrogName(generateRandomName());
     frog->setFrogMaxHealth(std::uniform_int_distribution<>(200, 250)(gen));
+    frog->setHealth(frog->getFrogMaxHealth());
     frog->setFrogMaxPower(std::uniform_int_distribution<>(50, 80)(gen));
+    frog->setPower(frog->getFrogMaxPower());
     frog->setFrogAgility(std::uniform_int_distribution<>(40, 70)(gen));
 
     return frog;
 }
 
-/*
-auto getRandomNumber(int min, int max) -> int {
+auto randomNumber(int min, int max) -> int {
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(min, max);
-
-    return dis(rd);
+    std::uniform_int_distribution<> silaDis(min, max);
+    int a = silaDis(gen);
+    return a;
 }
-*/
 
 BaseSpecialAttack *generateRandomSpecialAttack() {
     std::random_device rd;

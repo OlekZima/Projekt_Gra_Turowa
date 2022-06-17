@@ -17,22 +17,24 @@ protected:
     int howManyRoundsWorking_;
 
 public:
-    [[nodiscard]] int getHowManyRoundsWorking() const;
+    int getHowManyRoundsWorking() const;
+
+    void setHowManyRoundsWorking(int howManyRoundsWorking);
 
     auto resetSpecialAttackUses() -> void;
 
     BaseSpecialAttack(std::string specialAttackName_, int specialAttackPower_, int specialAttackAgilityToAvoid_,
                       int howManyTimesSpecialAttackCanBeUsed_, int howManyRoundsWorking_);
 
-    [[nodiscard]] virtual SpecialAttackType getSpecialAttackType_() const = 0;
+    virtual SpecialAttackType getSpecialAttackType_() const = 0;
 
-    [[nodiscard]] int getSpecialAttackPower_() const;
+    int getSpecialAttackPower_() const;
 
     int getSpecialAttackUses_() const;
 
     int getHowManyTimesSpecialAttackCanBeUsed() const;
 
-    auto useSpecialAttack()-> void;
+    auto useSpecialAttack() -> void;
 
     int getSpecialAttackAgilityToAvoid() const;
 

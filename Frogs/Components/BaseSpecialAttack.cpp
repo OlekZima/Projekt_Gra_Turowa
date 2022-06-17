@@ -43,5 +43,9 @@ int BaseSpecialAttack::getHowManyRoundsWorking() const {
     return howManyRoundsWorking_;
 }
 
+void BaseSpecialAttack::setHowManyRoundsWorking(int howManyRoundsWorking) {
+    howManyRoundsWorking_ = howManyRoundsWorking;
+}
+
 
 

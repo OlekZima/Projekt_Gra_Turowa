@@ -10,11 +10,11 @@ class BaseSpecialAttack;
 class BaseFrog {
 protected:
     std::string frogName_;
-    int frogPower_ = frogMaxPower_;
-    int frogHealth_ = frogMaxHealth_;
     int frogMaxHealth_;
+    int frogHealth_;
     int frogAgility_;
     int frogMaxPower_;
+    int frogPower_;
     int frogExpPoints_ = 0;
     int frogExpToTheNextLvl = calculateExpToTheNextLvl();
     int frogLevel_ = 1;
@@ -26,6 +26,16 @@ protected:
     //return min + rand() % (max+1 - min);
 
 public:
+    auto evolvePower() -> void;
+
+    auto evolveHealth() -> void;
+
+    int getFrogHealth() const;
+
+    int getFrogPower() const;
+
+    int getFrogExpToTheNextLvl() const;
+
     auto restoreHealth() -> void;
 
     auto restoreStats() -> void;
@@ -36,9 +46,9 @@ public:
 
     auto checkIfDead() -> bool;
 
-    [[nodiscard]] auto isAlive() const -> bool;
+    auto isAlive() const -> bool;
 
-    [[nodiscard]] int getFrogMaxHealth() const;
+    int getFrogMaxHealth() const;
 
     auto declareDeadAndPrintDeadMessage() -> void;
 
@@ -55,23 +65,23 @@ public:
 
     auto setHealth(int health) -> void;
 
-    [[nodiscard]] auto getHealth() const -> int;
+    auto getHealth() const -> int;
 
-    [[nodiscard]] virtual auto getFrogType() const -> FrogType = 0;
+    virtual auto getFrogType() const -> FrogType = 0;
 
-    [[nodiscard]] auto getPower() const -> int;
+    auto getPower() const -> int;
 
-    [[nodiscard]] const std::string &getFrogName() const;
+    const std::string &getFrogName() const;
 
-    [[nodiscard]] int getFrogExpGive() const;
+    int getFrogExpGive() const;
 
-    [[nodiscard]] int getFrogAgility() const;
+    int getFrogAgility() const;
 
-    [[nodiscard]] auto calculateExpToTheNextLvl() const -> int;
+    auto calculateExpToTheNextLvl() const -> int;
 
-    [[nodiscard]] int getFrogLevel() const;
+    int getFrogLevel() const;
 
-    [[nodiscard]] BaseSpecialAttack *getSpecialAttack() const;
+    BaseSpecialAttack *getSpecialAttack() const;
 
     auto setPower(int power) -> void;
 
@@ -79,13 +89,13 @@ public:
 
     auto frogCheckIfDefensiveSpecialAttackIsStillWorkingOn() -> bool;
 
-    [[nodiscard]] auto getExpPoints() const -> int;
+    auto getExpPoints() const -> int;
 
     auto frogAddExp(int expPoints) const -> void;
 
-    [[nodiscard]] auto frogUseSpecialAttack(std::shared_ptr<BaseFrog> frogsToUseSpecialAttack) const -> int;
+    auto frogUseSpecialAttack(std::shared_ptr<BaseFrog> frogsToUseSpecialAttack) const -> int;
 
-    [[nodiscard]] int getFrogMaxPower() const;
+    int getFrogMaxPower() const;
 
     auto getFrogCurrentHp() -> int;
 

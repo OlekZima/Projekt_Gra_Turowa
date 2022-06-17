@@ -7,3 +7,4 @@ enum class FrogType {
     ICE,
     STEEL
 };
+

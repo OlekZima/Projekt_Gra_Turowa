@@ -1,6 +1,8 @@
 #include <string>
 #include <iostream>
 #include "../Frogs/BaseFrog.hpp"
+#include "Functions.hpp"
+
 
 using namespace std;
 
@@ -60,11 +62,27 @@ namespace game_functions {
         }
     }
 
-    auto generateFrogCollection() -> BaseFrog *
-    {
-        for (int i = 0; i < 15; ++i)
-        {
+    auto generateFrogCollection() -> BaseFrog * {
+        for (int i = 0; i < 15; ++i) {
 
+        }
+    }
+
+    auto typeToString(FrogType type) -> std::string {
+        switch (type) {
+
+            case FrogType::WATER:
+                return "Water";
+            case FrogType::EARTH:
+                return "Earth";
+            case FrogType::AIR:
+                return "Air";
+            case FrogType::FIRE:
+                return "Fire";
+            case FrogType::ICE:
+                return "Ice";
+            case FrogType::STEEL:
+                return "Steel";
         }
     }
 
