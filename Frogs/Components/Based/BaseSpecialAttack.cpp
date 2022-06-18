@@ -2,12 +2,21 @@
 #include <utility>
 #include "BaseSpecialAttack.hpp"
 
-BaseSpecialAttack::BaseSpecialAttack() {};
+BaseSpecialAttack::BaseSpecialAttack() {
+    specialAttackUses_ = 0,
+            howManyRoundsWorking_ = 0;
+};
 
 BaseSpecialAttack::BaseSpecialAttack(std::string specialAttackName_, int SpecialAttackPower_,
-                                     int specialAttackAgilityToAvoid, int howManyTimesSpecialAttackCanBeUsed_)
-        : specialAttackName_(std::move(specialAttackName_)), specialAttackPower_(SpecialAttackPower_),
-          howManyTimesSpecialAttackCanBeUsed_(howManyTimesSpecialAttackCanBeUsed_) {};
+                                     int howManyTimesSpecialAttackCanBeUsed_) {
+    this->specialAttackName_ = specialAttackName_;
+    this->specialAttackPower_ = SpecialAttackPower_;
+    this->howManyTimesSpecialAttackCanBeUsed_ = howManyTimesSpecialAttackCanBeUsed_;
+    this->howManyRoundsWorking_ = 0;
+    specialAttackUses_ = 0;
+
+
+};
 
 BaseSpecialAttack::BaseSpecialAttack(const BaseSpecialAttack &other) {
     this->specialAttackName_ = other.specialAttackName_;

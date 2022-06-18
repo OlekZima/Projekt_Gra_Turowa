@@ -5,6 +5,7 @@
 
 class DefensiveSpecialAttack : public BaseSpecialAttack {
 public:
+
     using BaseSpecialAttack::BaseSpecialAttack;
 
     SpecialAttackType getSpecialAttackType_() const override;

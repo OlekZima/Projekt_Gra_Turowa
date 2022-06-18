@@ -10,8 +10,9 @@ namespace game_functions {
 
     auto specialAttackTypeToString(SpecialAttackType type) -> std::string;
 
-    auto calculateDamageMultiplier(const BaseFrog *attackingFrog,
-                                   std::shared_ptr<BaseFrog> attackedFrog) -> float;
+    auto calculateDamageMultiplier(const std::shared_ptr<BaseFrog> &attackingFrog, const std::shared_ptr<BaseFrog> &attackedFrog) -> float;
+
+    auto generateRandomNumber(int min, int max) -> int;
 
     auto createRandomFrog() -> std::shared_ptr<BaseFrog>;
 
@@ -19,7 +20,10 @@ namespace game_functions {
 
     const std::string &generateRandomName();
 
-    auto Battle(std::array<std::shared_ptr<BaseFrog>, 6> &frogsUserChose,
-                std::array<std::shared_ptr<BaseFrog>, 4> &frogsEnemy) -> void;
+    auto Battle(std::array<std::shared_ptr<BaseFrog>, 6> &frogsUserChose, std::array<std::shared_ptr<BaseFrog>, 4> &frogsEnemy) -> void;
+
+    auto attackFrog(std::shared_ptr<BaseFrog> attackingFrog, std::shared_ptr<BaseFrog> attackedFrog) -> void;
+
+    auto frogUseSpecialAttack(std::shared_ptr<BaseFrog> &frogToUseSpecialAttack, std::shared_ptr<BaseFrog> &frogToUseOnSA) -> int;
 
 }

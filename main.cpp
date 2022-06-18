@@ -10,10 +10,19 @@
 
 auto main() -> int {
 
-    std::cout << "Welcome to the Game of Frogs, User!\n";
+    std::cout
+            << "    _____  ____     __    __  _____     ____  _________   _________ ______    ____     _____   _____  \n"
+               "   / ___ \\(    )    \\ \\  / / / ___/    / __ \\(_   _____) (_   _____(   __ \\  / __ \\   / ___ \\ / ____\\ \n"
+               "  / /   \\_/ /\\ \\    () \\/ ()( (__     / /  \\ \\ ) (___      ) (___   ) (__) )/ /  \\ \\ / /   \\_( (___   \n"
+               " ( (  ___( (__) )   / _  _ \\ ) __)   ( ()  () (   ___)    (   ___) (    __/( ()  () ( (  ____ \\___ \\  \n"
+               " ( ( (__  )    (   / / \\/ \\ ( (      ( ()  () )) (         ) (      ) \\ \\  ( ()  () ( ( (__  )    ) ) \n"
+               "  \\ \\__/ /  /\\  \\ /_/      \\_\\ \\___   \\ \\__/ /(   )       (   )    ( ( \\ \\_)\\ \\__/ / \\ \\__/ / ___/ /  \n"
+               "   \\____/__(  )__(/          \\\\____\\   \\____/  \\_/         \\_/      )_) \\__/ \\____/   \\____/ /____/   \n"
+               "                                                                                                      \n\n";
+    std::cout << "Hi, User!\n";
+
     std::string input;
     int difficulty = 0;
-
 
     while (input != "1" && input != "2") {
         std::cout << "Do you want to play?\n";
@@ -25,7 +34,7 @@ auto main() -> int {
         if (input == "--help" || input == "-h") {
             std::cout << "Here you can choose to start the game or exit\n\n" <<
                       "To start the game input (1)\n" <<
-                      "To exit input (2)\n\n";
+                      "To exit input (2)\n" << "To see this message again type `--help` or `-h`\n\n";
         } else if (input != "1" && input != "2") {
             std::cout << "Wrong input!\n";
         }
@@ -58,14 +67,15 @@ auto main() -> int {
 
         std::array<std::shared_ptr<BaseFrog>, 6> frogsUserChose{};
 
-        int counter = 0;
-        std::cout << "It's time to choose your Team!\n";
+        std::cout << "It's time to choose your Team!\n\n";
 
         for (int i = 0; i < frogs.size(); ++i) {
-            std::cout << "Frog # " << i + 1 << frogs[i]->getFrogInfo() << '\n';
+            std::cout << "Frog # " << i + 1 << frogs[i]->getFrogInfo();
         }
 
         std::cout << "Choose 6 frogs from the list!\n\n";
+
+        int counter = 0;
 
         while (counter != 6) {
             std::cout << "Type " + std::to_string((counter + 1)) + " number:";
@@ -74,10 +84,23 @@ auto main() -> int {
             if (inputForChooseFrogs == "-h" || inputForChooseFrogs == "--help") {
                 std::cout << "Here you can choose your frogs from the list\n" <<
                           "To choose input number of frog\n" <<
-                          "Choose wisely!\n" << "To see list of frogs input --help or -h\n\n";
+                          "Choose wisely!\n" << "To see this message again type `--help` or `-h`\n\n";
             } else if (std::stoi(inputForChooseFrogs) > 0 && std::stoi(inputForChooseFrogs) <= 15) {
-                frogsUserChose[counter] = frogs[std::stoi(inputForChooseFrogs) - 1];
-                counter++;
+
+                bool flagForChooseTeam = false;
+                for (int i = 0; i < frogsUserChose.size(); ++i) {
+                    if (frogsUserChose[i] == frogs[std::stoi(inputForChooseFrogs) - 1]) {
+                        std::cout << "You already chose this frog! Try again\n";
+                        flagForChooseTeam = true;
+                        break;
+                    }
+                }
+                if (flagForChooseTeam) {
+                    continue;
+                } else {
+                    frogsUserChose[counter] = frogs[std::stoi(inputForChooseFrogs) - 1];
+                    counter++;
+                }
             } else {
                 std::cout << "Wrong input!\n";
             }
@@ -105,43 +128,39 @@ auto main() -> int {
                 for (int i = 0; i < 4; ++i) {
                     std::cout << "There is a new enemy in the battle!\n\n";
                     std::cout << "Battle #" << i + 1 << "\n\n";
+
                     game_functions::Battle(frogsUserChose, frogsEnemy);
-
                 }
-                case 2: {
-                    std::cout << "You chose Medium!\n" <<
-                              "And you have 4 battles to win\n";
-                    std::cout << "Game is started!\n";
-                    for (int i = 0; i < 6; ++i) {
-                        std::cout << "There is a new enemy in the battle!\n";
-                        std::cout << "Battle " << i + 1 << '\n';
-                        game_functions::Battle(frogsUserChose, frogsEnemy);
-
-                    }
-
-
-                    break;
-                }
-                case 3: {
-                    std::cout << "You chose Hard!\n" <<
-                              "And you have 4 battles to win\n";
-                    std::cout << "Game is started!\n";
-                    for (int i = 0; i < 8; ++i) {
-                        std::cout << "There is a new enemy in the battle!\n";
-                        std::cout << "Battle " << i + 1 << '\n';
-
-                        game_functions::Battle(frogsUserChose, frogsEnemy);
-
-
-                    }
-                    break;
-                }
+                break;
             }
+            case 2: {
+                std::cout << "You have 6 battles to win\n";
+                std::cout << "Game is started!\n";
+                for (int i = 0; i < 6; ++i) {
+                    std::cout << "There is a new enemy in the battle!\n";
+                    std::cout << "Battle " << i + 1 << '\n';
 
+                    game_functions::Battle(frogsUserChose, frogsEnemy);
+                }
+                break;
+            }
+            case 3: {
+                std::cout << "You have 8 battles to win\n";
+                std::cout << "Game is started!\n";
+                for (int i = 0; i < 8; ++i) {
+                    std::cout << "There is a new enemy in the battle!\n";
+                    std::cout << "Battle " << i + 1 << '\n';
 
+                    game_functions::Battle(frogsUserChose, frogsEnemy);
+                }
+                break;
+            }
         }
     } else std::cout << "Goodbye!\n";
-
-
 }
+
+
+
+
+
 
