@@ -5,11 +5,8 @@
 #include "./Frogs/FrogsWithType.hpp"
 #include "./Functions/Functions.hpp"
 #include "Frogs/Components/DefensiveSpecialAttack.hpp"
-#include "Frogs/Components/OffensiveSpecialAttack.hpp"
-
 
 auto main() -> int {
-
     std::cout
             << "    _____  ____     __    __  _____     ____  _________   _________ ______    ____     _____   _____  \n"
                "   / ___ \\(    )    \\ \\  / / / ___/    / __ \\(_   _____) (_   _____(   __ \\  / __ \\   / ___ \\ / ____\\ \n"

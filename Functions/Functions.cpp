@@ -3,14 +3,15 @@
 #include <random>
 #include "../Frogs/Components/Based/BaseFrog.hpp"
 #include "Functions.hpp"
-#include "../Frogs/FrogsWithType.hpp"
 #include "../Frogs/Components/DefensiveSpecialAttack.hpp"
 #include "../Frogs/Components/OffensiveSpecialAttack.hpp"
 
-
 using namespace std;
-
 namespace game_functions {
+    /**
+     * @brief This function is used to choose the difficulty of the game. Return represents the difficulty.
+     * @return int
+     */
     auto chooseDifficulty() -> int {
         std::string option;
         while (option != "1" && option != "2" && option != "3") {
@@ -36,6 +37,11 @@ namespace game_functions {
         return optionNumber;
     }
 
+    /**
+     * @brief This function is used to get enum FrogType as string
+     * @return std::string
+     * @param FrogType
+     */
     auto frogTypeToString(FrogType type) -> std::string {
         switch (type) {
 
@@ -55,6 +61,11 @@ namespace game_functions {
         return "none";
     }
 
+    /**
+     * @brief This function is used to get enum SpecialAttackType as string
+     * @return std::string
+     * @param SpecialAttackType
+     */
     auto specialAttackTypeToString(SpecialAttackType type) -> std::string {
         switch (type) {
             case SpecialAttackType::DEFENSIVE:
@@ -65,6 +76,10 @@ namespace game_functions {
         return "none";
     }
 
+    /**
+     * @brief This function is used to generate random name as string
+     * @return std::string
+     */
     const std::string &generateRandomName() {
         std::random_device rd;
         std::mt19937 gen(rd());
@@ -80,6 +95,10 @@ namespace game_functions {
         return frogNames[dis(rd)];
     }
 
+/**
+ * @brief This function is used to generate random frog
+ * @return std::shared_ptr<BaseFrog>
+ */
     auto createRandomFrog() -> std::shared_ptr<BaseFrog> {
         std::random_device rd;
         std::mt19937 gen(rd());
@@ -136,7 +155,15 @@ namespace game_functions {
         return frog;
     }
 
-    auto calculateDamageMultiplier(const std::shared_ptr<BaseFrog> &attackingFrog, const std::shared_ptr<BaseFrog> &attackedFrog) -> float {
+    /**
+     * @brief This function is used to check, what is the efficiency of the attack
+     * @param std::shared_ptr<BaseFrog> attackingFrog
+     * @param std::shared_ptr<BaseFrog> attackedFrog
+     * @return float
+     */
+
+    auto calculateDamageMultiplier(const std::shared_ptr<BaseFrog> &attackingFrog,
+                                   const std::shared_ptr<BaseFrog> &attackedFrog) -> float {
 
         auto attackingFrogType = attackingFrog->getFrogType();
         auto attackedFrogType = attackedFrog->getFrogType();
@@ -169,6 +196,12 @@ namespace game_functions {
             return 1;
         }
     }
+
+    /**
+     * @brief This function is used to generate random special attack
+     * @param frogType
+     * @return std::shared_ptr<BaseSpecialAttack>
+     */
 
     auto generateRandomSpecialAttack(const FrogType &frogType) -> std::shared_ptr<BaseSpecialAttack> {
         std::random_device rd;
@@ -281,6 +314,11 @@ namespace game_functions {
         return specialAttack;
     }
 
+    /**
+        * @brief This function is used to generate random number
+        * @return int
+        * @param int, int
+        */
     auto generateRandomNumber(int min, int max) -> int {
         std::random_device rd;
         std::mt19937 gen(rd());
@@ -288,7 +326,13 @@ namespace game_functions {
         return dis(gen);
     }
 
-    auto Battle(std::array<std::shared_ptr<BaseFrog>, 6> &frogsUserChose, std::array<std::shared_ptr<BaseFrog>, 4> &frogsEnemy) -> void {
+    /**
+     * @brief This function is used to start the battle between two teams
+     * @return void
+     * @param std::array<std::shared_ptr<BaseFrog>, 6> &frogsUserChose, std::array<std::shared_ptr<BaseFrog>, 4> &frogsEnemy
+     */
+    auto Battle(std::array<std::shared_ptr<BaseFrog>, 6> &frogsUserChose,
+                std::array<std::shared_ptr<BaseFrog>, 4> &frogsEnemy) -> void {
         std::shared_ptr<BaseFrog> usersFrog = frogsUserChose[0];
 
         std::shared_ptr<BaseFrog> enemyFrog;
@@ -657,12 +701,15 @@ namespace game_functions {
                           << enemyFrog->getFrogSpecialAttack()->getHowManyRoundsWorking()
                           << " rounds left to the end of effect of special attack\n";
             }
-
-
         }
-
-
     }
+
+/**
+ * @brief This function is used to reduce the HP of the frog
+ * @param attackingFrog
+ * @param attackedFrog
+ * @return void
+ */
 
     auto attackFrog(std::shared_ptr<BaseFrog> attackingFrog, std::shared_ptr<BaseFrog> attackedFrog) -> void {
         if (attackedFrog->getFrogAgility() <= attackingFrog->getFrogAgility()) {
@@ -690,7 +737,15 @@ namespace game_functions {
         }
     }
 
-    auto frogUseSpecialAttack(std::shared_ptr<BaseFrog> &frogToUseSpecialAttack, std::shared_ptr<BaseFrog> &frogToUseOnSA) -> int {
+    /**
+ * @brief This function is used to reduce the Agility and Power of the frog
+ * @param frogToUseSpecialAttack
+ * @param frogToUseOnSA
+ * @return int
+ */
+
+    auto frogUseSpecialAttack(std::shared_ptr<BaseFrog> &frogToUseSpecialAttack,
+                              std::shared_ptr<BaseFrog> &frogToUseOnSA) -> int {
         if (frogToUseSpecialAttack->getFrogSpecialAttack()->getSpecialAttackUses_() <
             frogToUseSpecialAttack->getFrogSpecialAttack()->getHowManyTimesSpecialAttackCanBeUsed()) {
 
@@ -705,7 +760,6 @@ namespace game_functions {
                         frogToUseOnSA->getFrogAgility() +
                         frogToUseSpecialAttack->getFrogSpecialAttack()->getSpecialAttackPower_());
 
-                //------------------ prompt new
                 std::cout << "Frog " << frogToUseSpecialAttack->getFrogName() << " used "
                           << frogToUseSpecialAttack->getFrogSpecialAttack()->getSpecialAttackName()
                           << " on frog " << frogToUseOnSA->getFrogName() << " and increased his power by "
