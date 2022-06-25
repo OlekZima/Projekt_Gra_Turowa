@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.21)
 project(Projekt_Gra_Turowa)
 
 set(CMAKE_CXX_STANDARD 20)
+set(BUILD_SHARED_LIBS OFF)
+set(CMAKE_EXE_LINKER_FLAGS "-static")
 
 add_executable(
         Projekt_Gra_Turowa main.cpp Frogs/Components/Based/BaseFrog.cpp Frogs/Components/Based/BaseFrog.hpp Frogs/Components/Enums/FrogType.hpp

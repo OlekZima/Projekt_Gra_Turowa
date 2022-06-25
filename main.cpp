@@ -127,6 +127,13 @@ auto main() -> int {
                     std::cout << "Battle #" << i + 1 << "\n\n";
 
                     game_functions::Battle(frogsUserChose, frogsEnemy);
+                    //fixed start TODO:
+                    for (int j = 0; j < 4; ++j) {
+                        frogsEnemy[j] = game_functions::createRandomFrog();
+                        frogsUserChose[j]->restoreStats();
+                        frogsUserChose[j]->restoreHealth();
+                    }
+                    ///---------------------------------------------------
                 }
                 break;
             }
@@ -138,6 +145,13 @@ auto main() -> int {
                     std::cout << "Battle " << i + 1 << '\n';
 
                     game_functions::Battle(frogsUserChose, frogsEnemy);
+                    //fixed start TODO:
+                    for (int j = 0; j < 4; ++j) {
+                        frogsEnemy[j] = game_functions::createRandomFrog();
+                        frogsUserChose[j]->restoreStats();
+                        frogsUserChose[j]->restoreHealth();
+                    }
+                    ///---------------------------------------------------
                 }
                 break;
             }
@@ -149,15 +163,16 @@ auto main() -> int {
                     std::cout << "Battle " << i + 1 << '\n';
 
                     game_functions::Battle(frogsUserChose, frogsEnemy);
+                    //fixed start TODO:
+                    for (int j = 0; j < 4; ++j) {
+                        frogsEnemy[j] = game_functions::createRandomFrog();
+                        frogsUserChose[j]->restoreStats();
+                        frogsUserChose[j]->restoreHealth();
+                    }
+                    ///---------------------------------------------------
                 }
                 break;
             }
         }
     } else std::cout << "Goodbye!\n";
 }
-
-
-
-
-
-

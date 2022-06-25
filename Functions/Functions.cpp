@@ -218,13 +218,11 @@ namespace game_functions {
                         return std::make_shared<DefensiveSpecialAttack>("Water Fists",
                                                                         std::uniform_int_distribution<>(80,
                                                                                                         120)(gen),
-
                                                                         std::uniform_int_distribution<>(1, 3)(gen));
                     case 2:
                         return std::make_shared<OffensiveSpecialAttack>("Curse of Water",
                                                                         std::uniform_int_distribution<>(80,
                                                                                                         120)(gen),
-
                                                                         std::uniform_int_distribution<>(1, 3)(gen));
                 }
                 break;
@@ -235,7 +233,6 @@ namespace game_functions {
                         return std::make_shared<DefensiveSpecialAttack>("Earth Fists",
                                                                         std::uniform_int_distribution<>(80,
                                                                                                         120)(gen),
-
                                                                         std::uniform_int_distribution<>(1, 3)(gen));
                     case 2:
                         return std::make_shared<OffensiveSpecialAttack>("Curse of Earth",
@@ -250,13 +247,11 @@ namespace game_functions {
                         return std::make_shared<DefensiveSpecialAttack>("Air Fists",
                                                                         std::uniform_int_distribution<>(80,
                                                                                                         120)(gen),
-
                                                                         std::uniform_int_distribution<>(1, 3)(gen));
                     case 2:
                         return std::make_shared<OffensiveSpecialAttack>("Curse of Air",
                                                                         std::uniform_int_distribution<>(80,
                                                                                                         120)(gen),
-
                                                                         std::uniform_int_distribution<>(1, 3)(gen));
                 }
             }
@@ -267,13 +262,11 @@ namespace game_functions {
                         return std::make_shared<DefensiveSpecialAttack>("Fire Fists",
                                                                         std::uniform_int_distribution<>(80,
                                                                                                         120)(gen),
-
                                                                         std::uniform_int_distribution<>(1, 3)(gen));
                     case 2:
                         return std::make_shared<OffensiveSpecialAttack>("Curse of Fire",
                                                                         std::uniform_int_distribution<>(80,
                                                                                                         120)(gen),
-
                                                                         std::uniform_int_distribution<>(1, 3)(gen));
                 }
             }
@@ -284,13 +277,11 @@ namespace game_functions {
                         return std::make_shared<DefensiveSpecialAttack>("Ice Fists",
                                                                         std::uniform_int_distribution<>(80,
                                                                                                         120)(gen),
-
                                                                         std::uniform_int_distribution<>(1, 3)(gen));
                     case 2:
                         return std::make_shared<OffensiveSpecialAttack>("Curse of Ice",
                                                                         std::uniform_int_distribution<>(80,
                                                                                                         120)(gen),
-
                                                                         std::uniform_int_distribution<>(1, 3)(gen));
                 }
             }
@@ -309,7 +300,6 @@ namespace game_functions {
                                                                         std::uniform_int_distribution<>(1, 3)(gen));
                 }
             }
-
         }
         return specialAttack;
     }
@@ -366,7 +356,7 @@ namespace game_functions {
                     enemyFrog = frogsEnemy[1];
                 } else if (frogsEnemy[2]->getFrogCurrentHp() > 0) {
                     enemyFrog = frogsEnemy[2];
-                } else {
+                } else if (frogsEnemy[3]->getFrogCurrentHp() > 0) {
                     enemyFrog = frogsEnemy[3];
                 }
             }
@@ -407,6 +397,21 @@ namespace game_functions {
                 case 1: {
                     std::cout << "You chose Attack!\n";
                     attackFrog(usersFrog, enemyFrog);
+                    //fixed start TODO:
+                    if (enemyFrog->getFrogCurrentHp() <= 0) {
+                        if (frogsEnemy[0]->getFrogCurrentHp() > 0) {
+                            enemyFrog = frogsEnemy[0];
+                        } else if (frogsEnemy[1]->getFrogCurrentHp() > 0) {
+                            enemyFrog = frogsEnemy[1];
+                        } else if (frogsEnemy[2]->getFrogCurrentHp() > 0) {
+                            enemyFrog = frogsEnemy[2];
+                        } else if (frogsEnemy[3]->getFrogCurrentHp() > 0) {
+                            enemyFrog = frogsEnemy[3];
+                        }
+                        std::cout << "Enemy Frog is dead!\n";
+                        std::cout << "Enemy Frog is replaced by " << enemyFrog->getFrogName() << " !\n";
+                    }
+                    ///---------------------------------------------------
                     break;
                 }
                 case 2: {
@@ -485,7 +490,6 @@ namespace game_functions {
                         for (int i = 0; i < 6; ++i) {
                             std::cout << i + 1 << ". " << frogsUserChose[i]->getFrogInfo();
                         }
-
                         while (inputForChangeFrog != "1" && inputForChangeFrog != "2" &&
                                inputForChangeFrog != "3" && inputForChangeFrog != "4" &&
                                inputForChangeFrog != "5" && inputForChangeFrog != "6") {
@@ -493,8 +497,7 @@ namespace game_functions {
                             if (inputForChangeFrog == "-h" || inputForChangeFrog == "--help") {
                                 std::cout
                                         << "You can change your current frog to another if you want or you have to to win! \n"
-                                        <<
-                                        "To see this message again type `--help` or `-h`\n\n";
+                                        << "To see this message again type `--help` or `-h`\n\n";
                             } else if (inputForChangeFrog != "1" && inputForChangeFrog != "2" &&
                                        inputForChangeFrog != "3" && inputForChangeFrog != "4" &&
                                        inputForChangeFrog != "5" && inputForChangeFrog != "6") {
@@ -513,7 +516,6 @@ namespace game_functions {
                     }
                     break;
                 }
-
             }
 
             std::cout << "\nEnemy turn!\n\n";
@@ -521,11 +523,11 @@ namespace game_functions {
             switch (generateRandomNumber(1, 4)) {
                 case 1: {
                     std::cout << "Enemy chose Attack!\n";
-                    attackFrog(enemyFrog, usersFrog);
                     if (enemyFrog->getFrogCurrentHp() <= 0) {
                         flagToEnemy = false;
                         break;
                     }
+                    attackFrog(enemyFrog, usersFrog);
                     break;
                 }
                 case 2: {
@@ -539,7 +541,6 @@ namespace game_functions {
                         case SpecialAttackType::OFFENSIVE: {
                             usersFrog->restoreStats();
                             frogUseSpecialAttack(enemyFrog, usersFrog);
-
                             break;
                         }
                     }
@@ -551,8 +552,9 @@ namespace game_functions {
                     switch (generateRandomNumber(1, 4)) {
                         case 1: {
                             enemyFrog->restoreStats();
-                            enemyFrog = frogsEnemy[0];
+                            //TODO: BYło TAK ŻE NAJPIERW WYBIERAł, A PóŻNIEJ SPRAWDZAł
                             if (frogsEnemy[0]->getFrogCurrentHp() > 0) {
+                                enemyFrog = frogsEnemy[0];
                                 std::cout << "Enemy chose to change current frog to Frog: \n"
                                           << enemyFrog->getFrogInfo()
                                           << "\n";
@@ -560,53 +562,51 @@ namespace game_functions {
                             } else {
                                 std::cout << "Enemy tried to change frog to dead frog! Bruh! He is losing his move\n\n";
                             }
-
                             break;
                         }
-
                         case 2: {
                             enemyFrog->restoreStats();
-                            enemyFrog = frogsEnemy[1];
+                            //TODO: BYło TAK ŻE NAJPIERW WYBIERAł, A PóŻNIEJ SPRAWDZAł
+
                             if (frogsEnemy[1]->getFrogCurrentHp() > 0) {
+                                enemyFrog = frogsEnemy[1];
                                 std::cout << "Enemy chose to change current frog to Frog: \n"
                                           << enemyFrog->getFrogInfo()
                                           << "\n";
                                 flagToEnemy = true;
-
                             } else {
                                 std::cout << "Enemy tried to change frog to dead frog! Bruh! He is losing his move\n\n";
                             }
-
                             break;
                         }
                         case 3: {
                             enemyFrog->restoreStats();
-                            enemyFrog = frogsEnemy[2];
+                            //TODO: BYło TAK ŻE NAJPIERW WYBIERAł, A PóŻNIEJ SPRAWDZAł
+
                             if (frogsEnemy[2]->getFrogCurrentHp() > 0) {
+                                enemyFrog = frogsEnemy[2];
                                 std::cout << "Enemy chose to change current frog to Frog: \n"
                                           << enemyFrog->getFrogInfo()
                                           << "\n";
                                 flagToEnemy = true;
-
                             } else {
                                 std::cout << "Enemy tried to change frog to dead frog! Bruh! He is losing his move\n\n";
                             }
-
                             break;
                         }
                         case 4: {
                             enemyFrog->restoreStats();
-                            enemyFrog = frogsEnemy[3];
+                            //TODO: BYło TAK ŻE NAJPIERW WYBIERAł, A PóŻNIEJ SPRAWDZAł
+
                             if (frogsEnemy[3]->getFrogCurrentHp() > 0) {
+                                enemyFrog = frogsEnemy[3];
                                 std::cout << "Enemy chose to change current frog to Frog: \n"
                                           << enemyFrog->getFrogInfo()
                                           << "\n";
                                 flagToEnemy = true;
-
                             } else {
                                 std::cout << "Enemy tried to change frog to dead frog! Bruh! He is losing his move\n\n";
                             }
-
                             break;
                         }
                     }
@@ -632,18 +632,13 @@ namespace game_functions {
                                 enemyFrog->setFrogAgility(enemyFrog->getFrogAgility() + 5);
                                 break;
                             }
-
-
                         }
-
-
                         std::cout << enemyFrog->getFrogInfo() << "\n";
                     } else {
                         std::cout << "Enemy don't have enough exp points to evolve he is losing round!\n";
                     }
                 }
             }
-
 
             if (frogsUserChose[0]->getFrogCurrentHp() <= 0 && frogsUserChose[1]->getFrogCurrentHp() <= 0 &&
                 frogsUserChose[2]->getFrogCurrentHp() <= 0 &&
@@ -653,7 +648,15 @@ namespace game_functions {
                           "Game Over!\n";
                 break;
             }
-
+            //fixed start TODO:
+            if (frogsEnemy[0]->getFrogCurrentHp() <= 0 && frogsEnemy[1]->getFrogCurrentHp() <= 0 &&
+                frogsEnemy[2]->getFrogCurrentHp() <= 0 &&
+                frogsEnemy[3]->getFrogCurrentHp() <= 0) {
+                std::cout << "You killed whole enemy team!\n" <<
+                          "Next Battle is coming!\n";
+                break;
+            }
+            ///---------------------------------------------------
             std::cout << "End of the round!\n";
             if (usersFrog->getFrogSpecialAttack()->getHowManyRoundsWorking() > 0) {
                 if (usersFrog->getFrogSpecialAttack()->getHowManyRoundsWorking() == 1) {
@@ -673,7 +676,7 @@ namespace game_functions {
                     }
                 }
                 usersFrog->getFrogSpecialAttack()->setHowManyRoundsWorking(
-                        usersFrog->getFrogSpecialAttack()->getHowManyRoundsWorking() - 1);
+                        usersFrog->getFrogSpecialAttack()->getHowManyRoundsWorking());
                 std::cout << usersFrog->getFrogName() << " have "
                           << usersFrog->getFrogSpecialAttack()->getHowManyRoundsWorking()
                           << " rounds left to the end of effect of special attack\n";
@@ -696,7 +699,7 @@ namespace game_functions {
                     }
                 }
                 enemyFrog->getFrogSpecialAttack()->setHowManyRoundsWorking(
-                        enemyFrog->getFrogSpecialAttack()->getHowManyRoundsWorking() - 1);
+                        enemyFrog->getFrogSpecialAttack()->getHowManyRoundsWorking());
                 std::cout << enemyFrog->getFrogName() << " have "
                           << enemyFrog->getFrogSpecialAttack()->getHowManyRoundsWorking()
                           << " rounds left to the end of effect of special attack\n";
@@ -711,7 +714,8 @@ namespace game_functions {
  * @return void
  */
 
-    auto attackFrog(std::shared_ptr<BaseFrog> attackingFrog, std::shared_ptr<BaseFrog> attackedFrog) -> void {
+//TODO: ADDED REFERENCES
+    auto attackFrog(std::shared_ptr<BaseFrog> &attackingFrog, std::shared_ptr<BaseFrog> &attackedFrog) -> void {
         if (attackedFrog->getFrogAgility() <= attackingFrog->getFrogAgility()) {
             if (attackingFrog->getFrogPower() > 0) {
                 auto damageMultiplier = calculateDamageMultiplier(attackingFrog, attackedFrog);
