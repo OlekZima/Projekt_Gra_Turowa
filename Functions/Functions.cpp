@@ -348,7 +348,7 @@ namespace game_functions {
                 frog->setFrogExpGive();
                 frog->calculateExpToTheNextLvl();
             }
-
+//TODO: fixed health
             if (!flagToEnemy) {
                 if (frogsEnemy[0]->getFrogCurrentHp() > 0) {
                     enemyFrog = frogsEnemy[0];
