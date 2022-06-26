@@ -61,6 +61,7 @@ public:
     void setFrogMaxAgility(int frogMaxAgility);
     void setFrogExpGive();
     void setFrogSpecialAttack(const std::shared_ptr<BaseSpecialAttack> &frogSpecialAttack);
+    void setFrogLevel(int frogLevel);
 
     ///METHODS
     auto evolvePower() -> void;

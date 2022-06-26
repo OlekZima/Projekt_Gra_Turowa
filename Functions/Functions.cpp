@@ -390,7 +390,6 @@ namespace game_functions {
                 }
             }
 
-
             int inputChecked = std::stoi(inputForChooseFrog);
 
             switch (inputChecked) {
@@ -456,20 +455,27 @@ namespace game_functions {
 
                         switch (inputCheckedForEvolve) {
                             case 1: {
+                                //TODO: fixed lvl and EXP
                                 std::cout << "You chose to upgrade Health!\n";
                                 usersFrog->evolveHealth();
+                                usersFrog->setFrogLevel(usersFrog->getFrogLevel() + 1);
+                                usersFrog->setFrogExpPoints(usersFrog->getFrogExpPoints() - usersFrog->getFrogExpToTheNextLvl());
                                 std::cout << usersFrog->getFrogInfo() << "\n";
                                 break;
                             }
                             case 2: {
                                 std::cout << "You chose to upgrade Power!\n";
                                 usersFrog->evolvePower();
+                                usersFrog->setFrogLevel(usersFrog->getFrogLevel() + 1);
+                                usersFrog->setFrogExpPoints(usersFrog->getFrogExpPoints() - usersFrog->getFrogExpToTheNextLvl());
                                 std::cout << usersFrog->getFrogInfo() << "\n";
                                 break;
                             }
                             case 3: {
                                 std::cout << "You chose to upgrade Agility!\n";
                                 usersFrog->setFrogAgility(usersFrog->getFrogAgility() + 15);
+                                usersFrog->setFrogLevel(usersFrog->getFrogLevel() + 1);
+                                usersFrog->setFrogExpPoints(usersFrog->getFrogExpPoints() - usersFrog->getFrogExpToTheNextLvl());
                                 std::cout << usersFrog->getFrogInfo() << "\n";
                                 break;
                             }
@@ -619,17 +625,24 @@ namespace game_functions {
                         switch (generateRandomNumber(1, 3)) {
                             case 1: {
                                 std::cout << "Enemy chose to upgrade Health!\n";
+                                //TODO: fixed lvl na exp
+                                enemyFrog->setFrogLevel(enemyFrog->getFrogLevel() + 1);
+                                enemyFrog->setFrogExpPoints(enemyFrog->getFrogExpPoints() - enemyFrog->getFrogExpToTheNextLvl());
                                 enemyFrog->evolveHealth();
                                 break;
                             }
                             case 2: {
                                 std::cout << "Enemy chose to upgrade Power!\n";
+                                enemyFrog->setFrogLevel(enemyFrog->getFrogLevel() + 1);
+                                enemyFrog->setFrogExpPoints(enemyFrog->getFrogExpPoints() - enemyFrog->getFrogExpToTheNextLvl());
                                 enemyFrog->evolvePower();
                                 break;
                             }
                             case 3: {
                                 std::cout << "Enemy chose to upgrade Agility!\n";
-                                enemyFrog->setFrogAgility(enemyFrog->getFrogAgility() + 5);
+                                enemyFrog->setFrogLevel(enemyFrog->getFrogLevel() + 1);
+                                enemyFrog->setFrogExpPoints(enemyFrog->getFrogExpPoints() - enemyFrog->getFrogExpToTheNextLvl());
+                                enemyFrog->setFrogAgility(enemyFrog->getFrogAgility() + 15);
                                 break;
                             }
                         }
@@ -774,7 +787,6 @@ namespace game_functions {
 
                 return 1;
             } else {
-
                 frogToUseOnSA->setPower(frogToUseOnSA->getFrogPower() -
                                         (frogToUseSpecialAttack->getFrogSpecialAttack()->getSpecialAttackPower_()));
 
@@ -789,8 +801,6 @@ namespace game_functions {
 
                 frogToUseSpecialAttack->getFrogSpecialAttack()->useSpecialAttack();
                 frogToUseSpecialAttack->getFrogSpecialAttack()->setHowManyRoundsWorking(3);
-
-
             }
             return 1;
         }

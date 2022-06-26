@@ -175,4 +175,6 @@ auto main() -> int {
             }
         }
     } else std::cout << "Goodbye!\n";
+    std::cout << "You won!\n";
+    std::cout << "Thanks for playing!\n";
 }

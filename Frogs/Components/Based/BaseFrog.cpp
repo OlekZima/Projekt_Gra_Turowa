@@ -101,20 +101,17 @@ auto BaseFrog::declareDeadAndPrintDeadMessage() -> void {
     return isAlive_;
 }*/
 
-
 int BaseFrog::getFrogMaxHealth() const {
     return frogMaxHealth_;
 }
 
 auto BaseFrog::restoreHealth() -> void {
     this->frogCurrentHp_ = this->getFrogMaxHealth();
-
 }
 
 auto BaseFrog::restoreStats() -> void {
     this->frogPower_ = this->getFrogMaxPower();
     this->frogAgility_ = this->getFrogMaxAgility();
-
 }
 
 auto BaseFrog::restoreSpecialAttackUsedTimes() const -> void {
@@ -123,7 +120,6 @@ auto BaseFrog::restoreSpecialAttackUsedTimes() const -> void {
 
 auto BaseFrog::getFrogMaxPower() const -> int {
     return this->frogMaxPower_;
-
 }
 
 auto BaseFrog::getFrogInfo() const -> std::string {
@@ -150,7 +146,6 @@ auto BaseFrog::getFrogCurrentHp() const -> int {
     return this->frogCurrentHp_;
 }
 
-
 void BaseFrog::setFrogName(const std::string &frogName) {
     this->frogName_ = frogName;
 }
@@ -166,7 +161,6 @@ void BaseFrog::setFrogAgility(int frogAgility) {
 void BaseFrog::setFrogMaxPower(int frogMaxPower) {
     this->frogMaxPower_ = frogMaxPower;
 }
-
 
 int BaseFrog::getFrogPower() const {
     return this->frogPower_;
@@ -212,4 +206,8 @@ int BaseFrog::getFrogMaxAgility() const {
 
 void BaseFrog::setFrogMaxAgility(int frogMaxAgility) {
     frogMaxAgility_ = frogMaxAgility;
+}
+
+void BaseFrog::setFrogLevel(int frogLevel) {
+    frogLevel_ = frogLevel;
 }
