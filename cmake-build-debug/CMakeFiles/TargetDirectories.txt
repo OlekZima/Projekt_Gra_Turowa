@@ -1,3 +1,0 @@
-C:/Users/zimen/Desktop/Projekt_Gra_Turowa/cmake-build-debug/CMakeFiles/Projekt_Gra_Turowa.dir
-C:/Users/zimen/Desktop/Projekt_Gra_Turowa/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/zimen/Desktop/Projekt_Gra_Turowa/cmake-build-debug/CMakeFiles/rebuild_cache.dir
